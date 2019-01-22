@@ -1,0 +1,10 @@
+version: '3'
+services:
+  room-booker:
+    image: local-node:32000/room-booker:v1
+    ports: 
+    - "15000:80"
+    environment:
+      - GET_HOSTS_FROM=dns
+    labels:
+      kompose.service.type: LoadBalancer

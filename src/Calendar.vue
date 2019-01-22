@@ -10,9 +10,7 @@
     import TopBar from './components/TopBar.vue'
     import {
         client,
-        getRooms,
-        getCalendarEntries,
-        isOnline
+        getCalendarEntries
     } from './calendarService'
 
     import {parse as parseDate} from 'date-fns'

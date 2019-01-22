@@ -42,12 +42,12 @@
         flex-direction: row;
         width: 100%;
         background-color: #666;
-        position: relative;
-        height: 80px;
+        height: 120px;
+        padding: 10px;
         .room {
             background-color: #BBB;
-            margin: 10px;
             padding: 10px;
+            margin: 10px;
         }
     }
 </style>

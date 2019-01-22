@@ -1,9 +1,7 @@
 import hello from 'hellojs'
 import 'whatwg-fetch'
 import startOfDay from 'date-fns/start_of_day'
-import endOfDay from 'date-fns/end_of_day'
 import {format as formatTime} from 'date-fns'
-
 
 const active_directory_id = process.env.VUE_APP_ACTIVE_DIRECTORY_ID
 const application_id = process.env.VUE_APP_APPLICATION_ID

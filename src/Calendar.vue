@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <TopBar></TopBar>
-        <Schedule :dates="calendarEntries"/>
+        <Schedule :entries="calendarEntries"/>
     </div>
 </template>
 

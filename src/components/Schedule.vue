@@ -1,7 +1,7 @@
 <template>
   <div class="app" :class="modeClass" v-on:click="toggleDistanceMode">
-    <schedule-far :entries="dates"></schedule-far>
-    <schedule-close :entries="dates"></schedule-close>
+    <schedule-far :entries="entries"></schedule-far>
+    <schedule-close :entries="entries"></schedule-close>
   </div>
 </template>
 
@@ -14,7 +14,7 @@
     name: 'Schedule',
     props: {
       msg: String,
-      dates: Array
+      entries: Array
     },
 
     components: {

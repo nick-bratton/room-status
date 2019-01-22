@@ -10,9 +10,7 @@
     import TopBar from './components/TopBar.vue'
     import {
         client,
-        getRooms,
-        getCalendarEntries,
-        isOnline
+        getCalendarEntries
     } from './calendarService'
 
     import {parse as parseDate} from 'date-fns'
@@ -27,10 +25,7 @@
         },
         data() {
             return {
-                users: [],
-                calendarOwner: 'me',
                 calendarEntries: [],
-                fetch: fetch,
                 updateInterval: null
             }
         },
@@ -63,17 +58,7 @@
                     location: entry.location,
                     organizer: entry.organizer
                 }))
-                // .filter(entry => {
-                //     var end = new Date();
-                //     end.setHours(23,59,59,999);
-
-                //     var start = new Date();
-                //     start.setHours(0,0,0,0);
-                //     return entry.end < end && entry.start > start
-                //   } )
                     .sort((first, second) => first.start - second.start)
-
-
                 this.calendarEntries = entries;
             },
         }

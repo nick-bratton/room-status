@@ -1,10 +1,13 @@
 <template>
     <div class="schedule-close">
-        <div v-for="(entry, entryIndex) in shownEntries" v-bind:key="entryIndex">
-            <div class="day-indicator" v-if="isDifferentDay(entryIndex)">
-                {{ entry.start | niceDay }}
+        <room-overview></room-overview>
+        <div class="time-entries">
+            <div v-for="(entry, entryIndex) in shownEntries" v-bind:key="entryIndex">
+                <div class="day-indicator" v-if="isDifferentDay(entryIndex)">
+                    {{ entry.start | niceDay }}
+                </div>
+                <ScheduleSlot class="div-slot" :entry="entry"/>
             </div>
-            <ScheduleSlot class="div-slot" :entry="entry"/>
         </div>
     </div>
 </template>
@@ -13,6 +16,7 @@
     import ScheduleSlot from './ScheduleSlot.vue'
     import startOfDay from 'date-fns/start_of_day'
     import {format} from 'date-fns'
+    import RoomOverview from './RoomOverview'
 
     const officeCloseTime = {hours: 18, minutes: 0}
     const officeOpenTime = {hours: 10, minutes: 0}
@@ -23,6 +27,7 @@
             entries: Array
         },
         components: {
+            RoomOverview,
             ScheduleSlot
         },
         methods: {
@@ -103,7 +108,7 @@
 
 <style lang="scss" scoped>
     .schedule-close {
-        overflow: auto;
+        overflow: hidden;
         .day-indicator {
             background-color: black;
             color: white;

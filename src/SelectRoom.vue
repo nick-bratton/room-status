@@ -12,7 +12,7 @@
 </template>
 <script>
 import {
-    getUserList,
+    getRooms,
     client,
 } from '@/calendarService'
 export default {
@@ -25,7 +25,7 @@ export default {
     },
     methods:{
         async getUsers(){
-            const user = (await getUserList(client))
+            const user = (await getRooms(client))
             this.users = user.value.map(
                 user=>({
                     name: user.displayName,

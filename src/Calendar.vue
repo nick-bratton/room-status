@@ -10,7 +10,7 @@
     import TopBar from './components/TopBar.vue'
     import {
         client,
-        getUserList,
+        getRooms,
         getCalendarEntries,
         isOnline
     } from './calendarService'

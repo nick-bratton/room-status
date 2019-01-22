@@ -93,7 +93,7 @@ export async function getCalendarEntries(
     ).get()
 }
 
-export async function getUserList(client, prefix='Room') {
+export async function getRooms(client, prefix='Room') {
     return await client.api(
         `users`,
         {

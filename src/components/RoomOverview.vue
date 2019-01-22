@@ -1,7 +1,7 @@
 <template>
     <div class="room-overview">
         <div v-for="room in rooms" class="room" :key="room.id">
-            {{ room.displayName }}
+            {{ room.displayName | niceRoomName }}
         </div>
     </div>
 </template>
@@ -11,6 +11,7 @@
         getRooms,
         client,
     } from '../calendarService'
+    import niceRoomName from './niceRoomName'
 
     export default {
         data() {
@@ -21,6 +22,9 @@
         async mounted() {
             if (!client.session) await client.connect()
             this.getUsers()
+        },
+        filters: {
+            niceRoomName
         },
         methods: {
             async getUsers() {

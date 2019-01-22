@@ -15,6 +15,7 @@
         client,
     } from '../calendarService'
     import leftPad from 'left-pad'
+    import niceRoomName from './niceRoomName'
 
     export default {
         data() {
@@ -35,10 +36,7 @@
             clearInterval(this.updateTimeInterval)
         },
         filters: {
-            niceRoomName(rawRoomName) {
-                if (!rawRoomName) return rawRoomName
-                return rawRoomName.replace(/^room(-|–)(ber|muc)(-|–)/i, "")
-            },
+            niceRoomName,
             niceTime(date) {
                 const hours = leftPad(date.getHours(), 2, '0')
                 const minutes = leftPad(date.getMinutes(), 2, '0')

@@ -2,7 +2,7 @@
 <div>
     Select the room to be displayed:
     <ul class="rooms">
-        <li v-for="user in users" :key="user.id">
+        <li v-for="user in rooms" :key="user.id">
             <router-link :to="`/calendar/${user.id}`">
             {{user.name}}
             </router-link>
@@ -17,7 +17,7 @@ import {
 } from '@/calendarService'
 export default {
     data(){return {
-        users: [],
+        rooms: [],
     }},
     async mounted(){
         if(!client.session) await client.connect()
@@ -25,11 +25,11 @@ export default {
     },
     methods:{
         async getUsers(){
-            const user = (await getRooms(client))
-            this.users = user.value.map(
-                user=>({
-                    name: user.displayName,
-                    id: user.id
+            const rooms = (await getRooms(client))
+            this.rooms = rooms.value.map(
+                room=>({
+                    name: room.displayName,
+                    id: room.id
                 })
             )
         },

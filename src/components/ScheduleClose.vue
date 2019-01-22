@@ -1,5 +1,5 @@
 <template>
-    <div class="schedule-close">
+    <div class="schedule-close" v-if="entries">
         <div v-for="(entry, entryIndex) in shownEntries" v-bind:key="entryIndex">
             <div class="day-indicator" v-if="isDifferentDay(entryIndex)">
                 {{ entry.start | niceDay }}

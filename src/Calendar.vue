@@ -25,7 +25,7 @@
         },
         data() {
             return {
-                calendarEntries: [],
+                calendarEntries: null,
                 updateInterval: null
             }
         },

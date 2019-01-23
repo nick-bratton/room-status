@@ -44,44 +44,6 @@ var online = function(session) {
 	return session && session.access_token && session.expires > currentTime;
 };
 
-function connectAPI(baseUrl, _token){
-    return (request, params={})=>{
-        const token = _token()
-        const paramKeys = Object.keys(params)
-        const searchQuery = paramKeys.length ?
-          `?` + paramKeys.map(
-                param=>`${param}=${params[param]}`
-            ).join(`&`)
-          : ''
-
-        const url = baseUrl + request + searchQuery
-        return {
-            async get(){
-                const result = await fetch(url,{
-                    method: "GET",
-                    headers: new Headers({
-                        Authorization: `Bearer ${token}`
-                    }),
-                })
-                const json = await result.json()
-                return json.value ? {value: json.value} : json
-            }
-        }
-    }
-}
-
-export async function connectAd(){
-    const session = await getSession();
-    if(!online(session)) login()
-    const token = getToken(session)
-
-    const client = {
-        baseUrl: "https://graph.microsoft.com/v1.0/",
-        api: connectAPI(this.baseUrl, ()=>token)
-    }
-    return client
-}
-
 export async function getCalendarEntries(
     client,
     user,
@@ -111,8 +73,31 @@ export const client = {
     baseUrl: "https://graph.microsoft.com/v1.0/",
     token  : undefined,
     session: undefined,
-    api: connectAPI("https://graph.microsoft.com/v1.0/", ()=>client.token),
-
+    api(request, params={}) {
+        const paramKeys = Object.keys(params)
+        const searchQuery = paramKeys.length ?
+            `?` + paramKeys.map(
+            param=>`${param}=${params[param]}`
+            ).join(`&`)
+            : ''
+        const url = this.baseUrl + request + searchQuery
+        return {
+            get: async () => {
+                // Get a new token if the current one expired.
+                if(!this.online) {
+                    await this.connect()
+                }
+                const result = await fetch(url,{
+                    method: "GET",
+                    headers: new Headers({
+                        Authorization: `Bearer ${this.token}`
+                    }),
+                })
+                const json = await result.json()
+                return json.value ? {value: json.value} : json
+            }
+        }
+    },
     get online(){
         return online(this.session)
     },

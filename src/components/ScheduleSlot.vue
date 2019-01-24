@@ -53,7 +53,15 @@
                         name: attendee,
                         isOrganizer
                     }
-                }).sort((a,b) => a.isOrganizer && !(b.isOrganizer))
+                }).sort((a,b) => {
+                    if(a.isOrganizer && !(b.isOrganizer)) {
+                        return -1
+                    }
+                    if(!(a.isOrganizer) && b.isOrganizer) {
+                        return 1
+                    }
+                    return 0
+                })
             },
             bgProgressStyle() {
                 const progress = getProgressUntilEntryEnd(this.entry)

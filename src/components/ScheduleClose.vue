@@ -10,6 +10,7 @@
 </template>
 
 <script>
+    import {isSameDay} from './dates.js'
     import ScheduleSlot from './ScheduleSlot.vue'
     import startOfDay from 'date-fns/start_of_day'
     import {format} from 'date-fns'
@@ -58,7 +59,7 @@
                 if (entryIndex === 0) return false
                 const currentEntry = this.shownEntries[entryIndex]
                 const previousEntry = this.shownEntries[entryIndex - 1]
-                return startOfDay(previousEntry.start).getTime() != startOfDay(currentEntry.start).getTime()
+                return !(isSameDay(previousEntry.start, currentEntry.start))
             }
         },
         computed: {

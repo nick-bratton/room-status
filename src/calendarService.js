@@ -20,28 +20,30 @@ hello.init({
 })
 hello.init({"activeDirectoryTenant": application_id})
 
-function login(){
-    hello.login("activeDirectoryTenant",{
+async function login() {
+    const promise = await hello.login("activeDirectoryTenant", {
         display: "page",
         scope: encodeURIComponent([
             `https://graph.microsoft.com/Calendars.Read.Shared`,
             `https://graph.microsoft.com/User.ReadBasic.All`
         ].join(' ')),
-        response_type: "token"
+        force: false
     })
+    return promise
 }
-async function getSession(){
+
+async function getSession() {
     const session = hello("activeDirectoryTenant").getAuthResponse()
     return session
 }
 
-function getToken(session){
+function getToken(session) {
     return session.access_token;
 }
 
-var online = function(session) {
+var online = function (session) {
     var currentTime = (new Date()).getTime() / 1000;
-	return session && session.access_token && session.expires > currentTime;
+    return session && session.access_token && session.expires > currentTime;
 };
 
 export async function getCalendarEntries(
@@ -83,11 +85,8 @@ export const client = {
         const url = this.baseUrl + request + searchQuery
         return {
             get: async () => {
-                // Get a new token if the current one expired.
-                if(!this.online) {
-                    await this.connect()
-                }
-                const result = await fetch(url,{
+                await this.connect()
+                const result = await fetch(url, {
                     method: "GET",
                     headers: new Headers({
                         Authorization: `Bearer ${this.token}`
@@ -102,9 +101,10 @@ export const client = {
         return online(this.session)
     },
 
-    async connect(){
+    async connect() {
+        // Get a new token if the current one expired.
+        await login()
         this.session = await getSession();
-        if(!this.online) login()
         this.token = getToken(this.session)
     }
 }

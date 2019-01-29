@@ -11,7 +11,7 @@
 
 <script>
     const refreshTimeEveryMilliSeconds = 1000
-    import api from '../api'
+    import {getRoomName} from '@/roomsService'
     import leftPad from 'left-pad'
 
     export default {
@@ -44,8 +44,8 @@
         },
         methods: {
             async refreshRoomName() {
-                const roomInfo = await api(`users/${this.$route.params.user}`).get()
-                this.currentRoomName = roomInfo.displayName
+                const roomName = await getRoomName(this.$route.params.user)
+                this.currentRoomName = roomName
             },
             refreshTime() {
                 this.currentTime = new Date()

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Calendar from '@/Calendar.vue'
-import SelectRoom from '@/SelectRoom.vue'
+import Calendar from '@/views/Calendar.vue'
+import SelectRoom from '@/views/SelectRoom.vue'
 import VueRouter from 'vue-router'
 
 const router = new VueRouter({

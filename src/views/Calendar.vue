@@ -7,11 +7,11 @@
 
 <script>
     import {getRoomName} from '@/roomsService'
-    import Schedule from './components/Schedule.vue'
-    import TopBar from './components/TopBar.vue'
+    import Schedule from '@/components/Schedule.vue'
+    import TopBar from '@/components/TopBar.vue'
     import {
         getCalendarEntries
-    } from './calendarService'
+    } from '@/calendarService'
 
     import {parse as parseDate} from 'date-fns'
 

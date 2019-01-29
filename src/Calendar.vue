@@ -1,11 +1,12 @@
 <template>
     <div id="app">
-        <TopBar></TopBar>
+        <TopBar :room-name="roomName"></TopBar>
         <Schedule :entries="calendarEntries"/>
     </div>
 </template>
 
 <script>
+    import {getRoomName} from '@/roomsService'
     import Schedule from './components/Schedule.vue'
     import TopBar from './components/TopBar.vue'
     import {
@@ -25,12 +26,14 @@
         data() {
             return {
                 calendarEntries: null,
+                roomName: null,
                 updateInterval: null
             }
         },
         async mounted() {
             if (this.$route.params.user) {
                 await this.refreshCalendar()
+                await this.refreshRoomName()
             }
             this.updateInterval = setInterval(this.refreshCalendar, refreshEveryMilliSeconds)
         },
@@ -38,15 +41,18 @@
             clearInterval(this.updateInterval)
         },
         watch: {
-            "$route"(to, from) {
-                // this.refreshCalendar()
+            "$route"() {
+                this.refreshCalendar()
+                this.refreshRoomName()
             }
-
         },
         methods: {
 
             async refreshCalendar() {
                 const rawEntries = await getCalendarEntries(this.$route.params.user)
+                if(!rawEntries || rawEntries.error) {
+                    return
+                }
                 const entries = rawEntries.map(entry => ({
                     attendees: entry.attendees.map(
                         attendee => attendee.emailAddress.name),
@@ -59,6 +65,11 @@
                     .sort((first, second) => first.start - second.start)
                 this.calendarEntries = entries;
             },
+            async refreshRoomName() {
+                const roomName = await getRoomName(this.$route.params.user)
+                this.roomName = roomName
+
+            }
         }
     }
 </script>

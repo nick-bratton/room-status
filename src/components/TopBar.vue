@@ -1,7 +1,7 @@
 <template>
     <div class="top-bar">
-        <div class="room-name" v-if="currentRoomName">
-            {{ currentRoomName | niceRoomName }}
+        <div class="room-name" v-if="roomName">
+            {{ roomName | niceRoomName }}
         </div>
         <div class="current-time" v-if="currentTime">
             {{ currentTime | niceTime }}
@@ -11,22 +11,18 @@
 
 <script>
     const refreshTimeEveryMilliSeconds = 1000
-    import {getRoomName} from '@/roomsService'
     import leftPad from 'left-pad'
 
     export default {
+        props: ['roomName'],
         data() {
             return {
-                currentRoomName: null,
                 currentTime: null,
                 updateTimeInterval: null
             }
         },
         async mounted() {
             this.updateTimeInterval = setInterval(this.refreshTime, refreshTimeEveryMilliSeconds)
-            if (this.$route.params.user) {
-                await this.refreshRoomName()
-            }
         },
         beforeDestroy() {
             clearInterval(this.updateTimeInterval)
@@ -43,10 +39,6 @@
             }
         },
         methods: {
-            async refreshRoomName() {
-                const roomName = await getRoomName(this.$route.params.user)
-                this.currentRoomName = roomName
-            },
             refreshTime() {
                 this.currentTime = new Date()
             }

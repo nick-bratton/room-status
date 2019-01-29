@@ -24,7 +24,16 @@ class Client {
                         Authorization: `Bearer ${this.token}`
                     }),
                 })
+                    .catch(e => {
+                        throw new Error(e)
+                    })
                 const json = await result.json()
+                if(!json) {
+                    throw new Error('Could not decode JSON')
+                }
+                if(json.error) {
+                    throw new Error(json.error.message)
+                }
                 return json.value ? json.value : json
             }
         }

@@ -26,7 +26,7 @@ export default {
     methods:{
         async getUsers(){
             const rooms = (await getRooms(client))
-            this.rooms = rooms.value.map(
+            this.rooms = rooms.map(
                 room=>({
                     name: room.displayName,
                     id: room.id

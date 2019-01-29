@@ -93,7 +93,7 @@ export const client = {
                     }),
                 })
                 const json = await result.json()
-                return json.value ? {value: json.value} : json
+                return json.value ? json.value : json
             }
         }
     },

@@ -49,7 +49,7 @@
 
             async refreshCalendar() {
                 const rawEntries = await getCalendarEntries(client, this.$route.params.user)
-                const entries = rawEntries.value.map(entry => ({
+                const entries = rawEntries.map(entry => ({
                     attendees: entry.attendees.map(
                         attendee => attendee.emailAddress.name),
                     start: parseDate(entry.start.dateTime),

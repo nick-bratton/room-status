@@ -49,15 +49,15 @@ var online = function (session) {
 export async function getCalendarEntries(
     client,
     user,
-    start=startOfDay(new Date()),
-    end=new Date(new Date().setDate(new Date().getDate() + 5))
-    ) {
+    start = startOfDay(new Date()),
+    end = new Date(new Date().setDate(new Date().getDate() + 5))
+) {
     return await client.api(
         `users/${user}/calendarView?startDateTime=${formatTime(start, "YYYY-MM-DDThh:mm:ss.0000000")}&endDateTime=${formatTime(end, "YYYY-MM-DDThh:mm:ss.0000000")}`
     ).get()
 }
 
-export async function getRooms(client, prefix='Room') {
+export async function getRooms(client, prefix = 'Room') {
     return await client.api(
         `users`,
         {
@@ -66,20 +66,20 @@ export async function getRooms(client, prefix='Room') {
     ).get()
 }
 
-export async function isOnline(){
+export async function isOnline() {
     const session = await getSession();
     return online(session)
 }
 
 export const client = {
     baseUrl: "https://graph.microsoft.com/v1.0/",
-    token  : undefined,
+    token: undefined,
     session: undefined,
-    api(request, params={}) {
+    api(request, params = {}) {
         const paramKeys = Object.keys(params)
         const searchQuery = paramKeys.length ?
             `?` + paramKeys.map(
-            param=>`${param}=${params[param]}`
+            param => `${param}=${params[param]}`
             ).join(`&`)
             : ''
         const url = this.baseUrl + request + searchQuery
@@ -97,7 +97,7 @@ export const client = {
             }
         }
     },
-    get online(){
+    get online() {
         return online(this.session)
     },
 
@@ -112,7 +112,7 @@ export const client = {
 export function getCurrentEntry(entries) {
     const now = new Date()
     return entries.find((entry) => {
-      return entry.start <= now && now <= entry.end
+        return entry.start <= now && now <= entry.end
     })
 }
 
@@ -120,10 +120,10 @@ export function getCurrentEntry(entries) {
 // so this will return the first session that starts later than now and ignore all subsequent ones.
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
 export function getNextEntry(entries) {
-  const now = new Date()
-  return entries.find((entry) => {
-    return now < entry.start
-  })
+    const now = new Date()
+    return entries.find((entry) => {
+        return now < entry.start
+    })
 }
 
 // Returns the next available time between calendar entries.
@@ -131,11 +131,11 @@ export function getNextFreeTime(entries) {
     // For now there is no minimum amount of time for the room to be considered available.
     const minimumTimeInBetweenInMilliseconds = 0
     const now = new Date()
-    for(let i = 0; i < entries.length; i++) {
+    for (let i = 0; i < entries.length; i++) {
         const notEnded = now <= entries[i].end
         const isLastEntry = i === entries.length - 1
-        const enoughSpaceInBetween = isLastEntry || new Date(entries[i].end.getMilliseconds() + minimumTimeInBetweenInMilliseconds) < entries[i+1].start
-        if(notEnded && enoughSpaceInBetween) {
+        const enoughSpaceInBetween = isLastEntry || new Date(entries[i].end.getMilliseconds() + minimumTimeInBetweenInMilliseconds) < entries[i + 1].start
+        if (notEnded && enoughSpaceInBetween) {
             return entries[i].end
         }
     }

@@ -11,9 +11,7 @@
 
 <script>
     const refreshTimeEveryMilliSeconds = 1000
-    import {
-        client,
-    } from '../calendarService'
+    import api from '../api'
     import leftPad from 'left-pad'
 
     export default {
@@ -26,7 +24,6 @@
         },
         async mounted() {
             this.updateTimeInterval = setInterval(this.refreshTime, refreshTimeEveryMilliSeconds)
-            await client.connect()
             if (this.$route.params.user) {
                 await this.refreshRoomName()
             }
@@ -47,7 +44,7 @@
         },
         methods: {
             async refreshRoomName() {
-                const roomInfo = await client.api(`users/${this.$route.params.user}`).get()
+                const roomInfo = await api(`users/${this.$route.params.user}`).get()
                 this.currentRoomName = roomInfo.displayName
             },
             refreshTime() {

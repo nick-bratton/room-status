@@ -1,117 +1,20 @@
-import hello from 'hellojs'
-import 'whatwg-fetch'
+import api from './api.js'
 import startOfDay from 'date-fns/start_of_day'
 import {format as formatTime} from 'date-fns'
 
-const active_directory_id = process.env.VUE_APP_ACTIVE_DIRECTORY_ID
-const application_id = process.env.VUE_APP_APPLICATION_ID
-
-hello.init({
-    activeDirectoryTenant: {
-        name: "Active Diretory",
-        oauth: {
-            version: 2,
-            auth: `https://login.microsoftonline.com/${active_directory_id}/oauth2/v2.0/authorize`,
-            grant: `https://login.microsoftonline.com/${active_directory_id}/oauth2/v2.0/token`,
-        },
-        // base: 'https://www.graph.microsoft.com/v1.0/',
-        form: false
-    }
-})
-hello.init({"activeDirectoryTenant": application_id})
-
-async function login() {
-    const promise = await hello.login("activeDirectoryTenant", {
-        display: "page",
-        scope: encodeURIComponent([
-            `https://graph.microsoft.com/Calendars.Read.Shared`,
-            `https://graph.microsoft.com/User.ReadBasic.All`
-        ].join(' ')),
-        force: false
-    })
-    return promise
-}
-
-async function getSession() {
-    const session = hello("activeDirectoryTenant").getAuthResponse()
-    return session
-}
-
-function getToken(session) {
-    return session.access_token;
-}
-
-var online = function (session) {
-    var currentTime = (new Date()).getTime() / 1000;
-    return session && session.access_token && session.expires > currentTime;
-};
-
 export async function getCalendarEntries(
-    client,
-    user,
+    roomId,
     start = startOfDay(new Date()),
     end = new Date(new Date().setDate(new Date().getDate() + 5))
 ) {
-    return await client.api(
-        `users/${user}/calendarView?startDateTime=${formatTime(start, "YYYY-MM-DDThh:mm:ss.0000000")}&endDateTime=${formatTime(end, "YYYY-MM-DDThh:mm:ss.0000000")}`
+    return await api(
+        `users/${roomId}/calendarView?startDateTime=${formatTime(start, "YYYY-MM-DDThh:mm:ss.0000000")}&endDateTime=${formatTime(end, "YYYY-MM-DDThh:mm:ss.0000000")}`
     )
         .get()
         .catch((e) => {
             console.warn(e)
             return getFakeEntries()
         })
-}
-
-export async function getRooms(client, prefix = 'Room') {
-    return await client.api(
-        `users`,
-        {
-            "$filter": `startswith(displayName, '${prefix}')`
-        }
-    ).get()
-}
-
-export async function isOnline() {
-    const session = await getSession();
-    return online(session)
-}
-
-export const client = {
-    baseUrl: "https://graph.microsoft.com/v1.0/",
-    token: undefined,
-    session: undefined,
-    api(request, params = {}) {
-        const paramKeys = Object.keys(params)
-        const searchQuery = paramKeys.length ?
-            `?` + paramKeys.map(
-            param => `${param}=${params[param]}`
-            ).join(`&`)
-            : ''
-        const url = this.baseUrl + request + searchQuery
-        return {
-            get: async () => {
-                await this.connect()
-                const result = await fetch(url, {
-                    method: "GET",
-                    headers: new Headers({
-                        Authorization: `Bearer ${this.token}`
-                    }),
-                })
-                const json = await result.json()
-                return json.value ? json.value : json
-            }
-        }
-    },
-    get online() {
-        return online(this.session)
-    },
-
-    async connect() {
-        // Get a new token if the current one expired.
-        await login()
-        this.session = await getSession();
-        this.token = getToken(this.session)
-    }
 }
 
 export function getCurrentEntry(entries) {

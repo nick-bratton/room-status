@@ -9,7 +9,6 @@
     import Schedule from './components/Schedule.vue'
     import TopBar from './components/TopBar.vue'
     import {
-        client,
         getCalendarEntries
     } from './calendarService'
 
@@ -30,7 +29,6 @@
             }
         },
         async mounted() {
-            await client.connect()
             if (this.$route.params.user) {
                 await this.refreshCalendar()
             }
@@ -48,7 +46,7 @@
         methods: {
 
             async refreshCalendar() {
-                const rawEntries = await getCalendarEntries(client, this.$route.params.user)
+                const rawEntries = await getCalendarEntries(this.$route.params.user)
                 const entries = rawEntries.map(entry => ({
                     attendees: entry.attendees.map(
                         attendee => attendee.emailAddress.name),

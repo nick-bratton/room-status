@@ -12,20 +12,18 @@
 </template>
 <script>
 import {
-    getRooms,
-    client,
-} from '@/calendarService'
+    getRooms
+} from '@/roomsService'
 export default {
     data(){return {
         rooms: [],
     }},
     async mounted(){
-        if(!client.session) await client.connect()
-        this.getUsers();
+        this.getRooms();
     },
     methods:{
-        async getUsers(){
-            const rooms = (await getRooms(client))
+        async getRooms(){
+            const rooms = (await getRooms())
             this.rooms = rooms.map(
                 room=>({
                     name: room.displayName,

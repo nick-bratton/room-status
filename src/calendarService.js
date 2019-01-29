@@ -54,7 +54,12 @@ export async function getCalendarEntries(
 ) {
     return await client.api(
         `users/${user}/calendarView?startDateTime=${formatTime(start, "YYYY-MM-DDThh:mm:ss.0000000")}&endDateTime=${formatTime(end, "YYYY-MM-DDThh:mm:ss.0000000")}`
-    ).get()
+    )
+        .get()
+        .catch((e) => {
+            console.warn(e)
+            return getFakeEntries()
+        })
 }
 
 export async function getRooms(client, prefix = 'Room') {
@@ -166,3 +171,38 @@ export function getProgressUntilNextEntry(nextEntry) {
     const anHour = 1000 * 3600
     return 1 - remaining / anHour
 }
+
+export function getFakeEntries() {
+    const now = new Date()
+    const people = [{
+        emailAddress: {
+            name: "Max Mustermann"
+        }
+    }]
+    const entriesTimes = [
+        ['10:30', '12:00'],
+        ['14:00', '14:30'],
+        ['14:00', '15:30'],
+        ['16:00', '18:00']
+    ]
+    const entries = []
+    for (const entryTimes of entriesTimes) {
+        const [startHours, startMinutes] = entryTimes[0].split(':').map(str => Number(str))
+        const [endHours, endMinutes] = entryTimes[1].split(':').map(str => Number(str))
+        const start = {
+            dateTime: new Date(new Date(now.setHours(startHours)).setMinutes(startMinutes))
+        }
+        const end = {
+            dateTime: new Date(new Date(now.setHours(endHours)).setMinutes(endMinutes))
+        }
+        const entry = {
+            start,
+            end,
+            attendees: people,
+            organizer: people[0]
+        }
+        entries.push(entry)
+    }
+    return entries
+}
+

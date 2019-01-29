@@ -1,11 +1,12 @@
 {
-  "name": "room-booker",
+  "name": "room-status",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "jest"
   },
   "dependencies": {
     "@microsoft/microsoft-graph-client": "^1.3.0",

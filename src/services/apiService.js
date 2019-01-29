@@ -1,4 +1,4 @@
-import {getSession, getToken, login} from "./auth";
+import {getSession, getToken, login} from "./authService";
 import 'whatwg-fetch'
 
 class Client {

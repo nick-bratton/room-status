@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 import Vuex from 'vuex'
-import {proximityEvents} from './proximityService'
+import {proximityEvents} from '@/services/proximityService'
 
 Vue.use(Vuex)
 

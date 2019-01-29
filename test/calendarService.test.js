@@ -1,5 +1,5 @@
 import assert from 'assert'
-import {getFakeEntries} from "../src/calendarService.js"
+import {getFakeEntries} from "../src/services/calendarService.js"
 import {isSameDay} from "../src/components/dates.js"
 
 describe('getFakeEntries', () => {

@@ -13,7 +13,7 @@
 <script>
 import {
     getRooms
-} from '@/roomsService'
+} from '@/services/roomsService'
 export default {
     data(){return {
         rooms: [],

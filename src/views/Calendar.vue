@@ -6,12 +6,10 @@
 </template>
 
 <script>
-    import {getRoomName} from '@/roomsService'
     import Schedule from '@/components/Schedule.vue'
     import TopBar from '@/components/TopBar.vue'
-    import {
-        getCalendarEntries
-    } from '@/calendarService'
+    import {getCalendarEntries} from '@/services/calendarService'
+    import {getRoomName} from '@/services/roomsService'
 
     import {parse as parseDate} from 'date-fns'
 
@@ -50,7 +48,7 @@
 
             async refreshCalendar() {
                 const rawEntries = await getCalendarEntries(this.$route.params.user)
-                if(!rawEntries || rawEntries.error) {
+                if (!rawEntries || rawEntries.error) {
                     return
                 }
                 const entries = rawEntries.map(entry => ({

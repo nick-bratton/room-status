@@ -1,4 +1,4 @@
-import api from './api.js'
+import api from './apiService.js'
 import startOfDay from 'date-fns/start_of_day'
 import {format as formatTime} from 'date-fns'
 

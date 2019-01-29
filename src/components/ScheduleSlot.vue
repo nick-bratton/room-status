@@ -23,7 +23,7 @@
 
 <script>
     import {format, distanceInWords, distanceInWordsStrict} from 'date-fns'
-    import {getProgressUntilEntryEnd} from "../calendarService";
+    import {getProgressUntilEntryEnd} from '@/services/calendarService'
 
     export default {
         props: ['entry'],

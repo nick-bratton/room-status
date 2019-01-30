@@ -10,11 +10,8 @@
                 <div v-if="entry.type === 'free'" class="free">
                     Free
                 </div>
-                <div class="attendees" v-else>
-                    <div class="attendee" v-for="(attendee, attendeeIndex) in attendees"
-                         v-bind:key="attendeeIndex" :class="{organizer: attendee.isOrganizer}">
-                        {{attendee.name}}
-                    </div>
+                <div class="organizer" v-else-if="organizerName">
+                    {{ organizerName }}
                 </div>
             </div>
         </div>
@@ -66,6 +63,13 @@
             bgProgressStyle() {
                 const progress = getProgressUntilEntryEnd(this.entry)
                 return 'transform: scaleX(' + progress + ')'
+            },
+            organizerName() {
+                const organizerName = this.entry.attendees.find(attendeeName => this.isOrganizer(attendeeName))
+                if(organizerName) {
+                    return organizerName
+                }
+                return ''
             },
             totalTime() {
                 return distanceInWordsStrict(this.entry.end, this.entry.start)
@@ -123,15 +127,6 @@
         background-color: black;
     }
 
-    .attendee {
-        display: inline-block;
-        font-weight: 100;
-        margin-right: 1em;
-        &.organizer {
-            font-weight: bold;
-        }
-    }
-
     .schedule-slot.schedule-slot.highlight > .time-block > * {
         color: white;
     }
@@ -150,18 +145,6 @@
 
     .schedule-slot.highlight > .middle-block > div.title {
         display: block;
-    }
-
-    .attendee-counter {
-        float: right;
-        display: inline-block;
-        box-sizing: border-box;
-
-        /* background-color: red; */
-
-        width: 10%;
-        height: 2em;
-        overflow: hidden;
     }
 
     .title {
@@ -193,8 +176,8 @@
             font-size: 60px;
             white-space: nowrap;
         }
-        .attendees {
-            font-size: 30px;
+        .organizer {
+            font-size: 36px;
         }
     }
 

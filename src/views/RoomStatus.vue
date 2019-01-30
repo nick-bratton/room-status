@@ -54,8 +54,8 @@
                 const entries = rawEntries.map(entry => ({
                     attendees: entry.attendees.map(
                         attendee => attendee.emailAddress.name),
-                    start: parseDate(entry.start.dateTime),
-                    end: parseDate(entry.end.dateTime),
+                    start: parseUTCDate(entry.start.dateTime),
+                    end: parseUTCDate(entry.end.dateTime),
                     name: entry.subject,
                     location: entry.location,
                     organizer: entry.organizer
@@ -70,6 +70,11 @@
             }
         }
     }
+
+    function parseUTCDate(dateStr) {
+        return parseDate(dateStr + 'Z')
+    }
+
 </script>
 
 <style scoped>

@@ -53,17 +53,22 @@
         return 'transform: translateY(' + percentage + '%)'
       },
       currentEntry() {
+        // console.log(getCurrentEntry(this.entries));
         return getCurrentEntry(this.entries)
       },
       nextEntry() {
         return getNextEntry(this.entries)
       },
       roomStatusText() {
-        if (this.currentEntry) {
-          return 'Available in'
-        } else {
-          if (this.nextEntry) {
-            return 'Free for'
+        if (this.currentEntry && (this.timeRemaining / 60000) > 30 ) {
+          return 'Busy'
+        }
+        else if ( this.currentEntry && (this.timeRemaining / 60000) <= 30) {
+          return 'Soon Free'
+        }
+        else {
+          if (this.nextEntry &&  getProgressUntilNextEntry(this.nextEntry) >= 0.5) {
+            return 'Soon Busy'
           } else {
             return 'Free'
           }

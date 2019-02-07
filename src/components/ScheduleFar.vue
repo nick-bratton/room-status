@@ -50,7 +50,7 @@
           }
         }
         const percentage = 100 * (1 - progress)
-        return 'transform: translateY(' + percentage + '%)'
+        return //'transform: translateY(' + percentage + '%)'
       },
       currentEntry() {
         // console.log(getCurrentEntry(this.entries));
@@ -132,6 +132,7 @@
 
 <style lang="scss" scoped>
   @import 'colors';
+  @import 'gradients';
 
   .schedule-far {
     color: white;
@@ -167,21 +168,28 @@
     }
     &.occupied {
       .bg-current {
-        background-color: $color-occupied;
+        // background-color: $color-occupied;
+        background-image: $gradient-busy;
       }
       .bg-next {
-        background-color: $color-free;
+        // background-color: $color-free;
+        background-image: $gradient-free;
         &.occupied {
-          background: linear-gradient(to bottom, $color-occupied-too, $color-occupied);
+          // background: linear-gradient(to bottom, $color-occupied-too, $color-occupied);
+          // here we need logic to get the soon-busy or soon-free style
+          // probably should make a new class at this point
+          background-image: $gradient-soon-busy;
         }
       }
     }
     &.free {
       .bg-current {
-        background-color: $color-free;
+        // background-color: $color-free;
+        background-image: $gradient-free;
       }
       .bg-next {
-        background-color: $color-occupied;
+        // background-color: $color-occupied;
+        background-image: $gradient-busy;
       }
     }
   }

@@ -68,16 +68,16 @@
       },
       roomStatusText() {
         if (this.currentEntry && (this.timeRemaining / 60000) > 30 ) {
-          return 'Busy'
+          return 'BUSY'
         }
         else if ( this.currentEntry && (this.timeRemaining / 60000) <= 30) {
-          return 'Soon Free'
+          return 'SOON FREE'
         }
         else {
           if (this.nextEntry &&  getProgressUntilNextEntry(this.nextEntry) >= 0.5) {
-            return 'Soon Busy'
+            return 'SOON BUSY'
           } else {
-            return 'Free'
+            return 'FREE'
           }
         }
       },
@@ -153,14 +153,16 @@
       margin-right: auto;
     }
     .room-status-intro-text {
-      font-size: 60px;
+      font-size: 160px;
+      font-weight: bold;
     }
     .room-status-time-amount,
     .room-status-time-free {
       font-size: 200px;
     }
     .room-status-time-units {
-      font-size: 60px;
+      font-size: 110px;
+      // font-weight: normal;
     }
     .room-status-time-free {
       margin-top: 130px;

@@ -22,13 +22,13 @@ export default {}
   @font-face {
     font-family: 'Klavika';
     src: url('./assets/Klavika-Light.otf');
-    font-weight: light;
+    font-weight: normal;
   }
 
   @font-face {
     font-family: 'Klavika';
     src: url('./assets/Klavika-Medium.otf');
-    font-weight: medium;
+    font-weight: bold;
   }
 
   #app {

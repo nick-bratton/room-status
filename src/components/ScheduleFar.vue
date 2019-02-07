@@ -10,13 +10,14 @@
       <div v-else>
         <div class="room-status-soon">
           <div v-if="roomStatusClass !== 'free' && roomStatusClass !== 'occupied'">Soon</div>
+          <div v-else>&nbsp</div>
         </div>
         <div class="room-status-intro-text">
           {{ roomStatusText }}
         </div>
 
         
-        <!-- 
+        <!-- to replace the 'soon' icon below
 
         http://jsfiddle.net/uhVj6/220/
 

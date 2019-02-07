@@ -19,10 +19,23 @@ export default {}
     /* background-color: #555;    */
   }
 
+  @font-face {
+    font-family: 'Klavika';
+    src: url('./assets/Klavika-Light.otf');
+    font-weight: light;
+  }
+
+  @font-face {
+    font-family: 'Klavika';
+    src: url('./assets/Klavika-Medium.otf');
+    font-weight: medium;
+  }
+
   #app {
-    font-family: 'Rubik', Arial, sans-serif;
-    /* font-size: 20pt; */
-    font-weight: 100;
+    /* font-family: 'Rubik', Arial, sans-serif; */    /* just commented out in this branch */
+    /* font-size: 20pt; */                            /* this was commented out in the master branch */
+    /* font-weight: 100; */                           /* just commented out in this branch */
+    font-family: 'Klavika', 'Rubik', Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 

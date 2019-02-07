@@ -50,6 +50,13 @@
           }
         }
         const percentage = 100 * (1 - progress)
+        // 
+        // returned data below  commented out to remove background animation
+        // that according to first design iteration, indicated the amt
+        // of time left before the next entry begins
+        //
+        // commented out by nick on Feb 7, 2019
+        //
         return //'transform: translateY(' + percentage + '%)'
       },
       currentEntry() {
@@ -178,7 +185,7 @@
           // background: linear-gradient(to bottom, $color-occupied-too, $color-occupied);
           // here we need logic to get the soon-busy or soon-free style
           // probably should make a new class at this point
-          background-image: $gradient-soon-busy;
+          // background-image: $gradient-soon-busy;
         }
       }
     }
@@ -189,7 +196,11 @@
       }
       .bg-next {
         // background-color: $color-occupied;
-        background-image: $gradient-busy;
+        // background-image: $gradient-busy;
+        //
+        // if the above is in-commented then 
+        // Free rooms will display the 
+        // busy gradient background...
       }
     }
   }

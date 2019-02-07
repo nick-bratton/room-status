@@ -54,7 +54,7 @@
         height: 101px;
         width: 100%;
         font-size: 60px;
-        background-color: black;
+        background-color: rgba(0,0,0,1);
         color: white;
         text-transform: uppercase;
 

@@ -1,7 +1,6 @@
 <template>
   <div class="schedule-far" v-if="entries" :class="roomStatusClass">
     <div class="bg-current"></div>
-    <div class="bg-next" :class="bgNextClass" :style="bgNextStyle"></div>
     <div class="room-status-info">
       <div v-if="roomStatusTimeAmount === Infinity">
         <div class="room-status-time-free">
@@ -54,25 +53,25 @@
       entries: Array
     },
     computed: {
-      bgNextClass() {
-        if (this.currentEntry && this.nextEntry && this.nextEntry.start <= this.currentEntry.end) {
-          return 'occupied'
-        }
-        return ''
-      },
-      bgNextStyle() {
-        let progress
-        if (this.currentEntry) {
-            const eightHours = 1000 * 3600 * 8
-            progress = getProgressUntilEntryEnd(this.currentEntry, eightHours)
-        } else {
-          if (this.nextEntry) {
-              progress = getProgressUntilNextEntry(this.nextEntry)
-          } else {
-              progress = 0
-          }
-        }
-        const percentage = 100 * (1 - progress)
+      // bgNextClass() {
+      //  if (this.currentEntry && this.nextEntry && this.nextEntry.start <= this.currentEntry.end) {
+      //     return 'occupied'
+      //   }
+      //   return ''
+      // },
+      // bgNextStyle() {
+      //   let progress
+      //   if (this.currentEntry) {
+      //       const eightHours = 1000 * 3600 * 8
+      //       progress = getProgressUntilEntryEnd(this.currentEntry, eightHours)
+      //   } else {
+      //     if (this.nextEntry) {
+      //         progress = getProgressUntilNextEntry(this.nextEntry)
+      //     } else {
+      //         progress = 0
+      //     }
+      //   }
+        // const percentage = 100 * (1 - progress)
         // 
         // returned data below  commented out to remove background animation
         // that according to first design iteration, indicated the amt
@@ -80,8 +79,8 @@
         //
         // commented out by nick on Feb 7, 2019
         //
-        return //'transform: translateY(' + percentage + '%)'
-      },
+        // return //'transform: translateY(' + percentage + '%)'
+      // },
       currentEntry() {
         // console.log(getCurrentEntry(this.entries));
         return getCurrentEntry(this.entries)
@@ -105,7 +104,19 @@
         }
       },
       roomStatusClass() {
-        return this.currentEntry ? 'occupied' : 'free'
+        if (this.currentEntry && (this.timeRemaining / 60000) > 30 ) {
+          return 'occupied'
+        }
+        else if ( this.currentEntry && (this.timeRemaining / 60000) <= 30) {
+          return 'free-soon' // soon free
+        }
+        else {
+          if (this.nextEntry &&  getProgressUntilNextEntry(this.nextEntry) >= 0.5) {
+            return 'occupied-soon' // soon busy
+          } else {
+            return 'free'
+          }
+        }
       },
       timeRemaining() {
         if (this.currentEntry) {
@@ -138,13 +149,13 @@
       roomStatusTimeUnits() {
         const seconds = this.timeRemaining / 1000
         if (seconds < 60) {
-          return 'seconds'
+          return 's'                                  // was 'seconds'
         } else {
           if (seconds < 3600) {
             return 'min'                              // was 'minutes'
           } else {
             if (seconds < 3600 * 24) {
-              return 'hours'
+              return 'hr'                             // was 'hours'
             } else {
               return 'days'
             }
@@ -194,7 +205,7 @@
     .room-status-time{
       font-size: 110px;
       display:flex;
-      margin-top:70px;
+      margin-top:80px;
     }
     .room-status-icon{
       // padding-top: 133px;
@@ -204,42 +215,32 @@
       font-size: 110px;
       font-weight: bold;
     }
-    .bg-current,
-    .bg-next {
+    .bg-current {
       position: absolute;
-      top: 0;
+      // top: -128px;
+      top:0;
       left: 0;
       right: 0;
       bottom: 0;
     }
     &.occupied {
       .bg-current {
-        // background-color: $color-occupied;
         background-image: $gradient-busy;
-      }
-      .bg-next {
-        // background-color: $color-free;
-        background-image: $gradient-free;
-        &.occupied {
-          // background: linear-gradient(to bottom, $color-occupied-too, $color-occupied);
-          // here we need logic to get the soon-busy or soon-free style
-          // probably should make a new class at this point
-          // background-image: $gradient-soon-busy;
-        }
       }
     }
     &.free {
       .bg-current {
-        // background-color: $color-free;
         background-image: $gradient-free;
       }
-      .bg-next {
-        // background-color: $color-occupied;
-        // background-image: $gradient-busy;
-        //
-        // if the above is in-commented then 
-        // Free rooms will display the 
-        // busy gradient background...
+    }
+    &.occupied-soon {
+      .bg-current {
+        background-image: $gradient-soon-busy;
+      }
+    }
+    &.free-soon{
+      .bg-current {
+        background-image: $gradient-soon-free;
       }
     }
   }

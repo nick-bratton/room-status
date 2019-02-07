@@ -8,10 +8,21 @@
         </div>
       </div>
       <div v-else>
-        <div class="room-status-soon">Soon</div>
+        <div class="room-status-soon">
+          <div v-if="roomStatusClass !== 'free' && roomStatusClass !== 'occupied'">Soon</div>
+        </div>
         <div class="room-status-intro-text">
           {{ roomStatusText }}
         </div>
+
+        
+        <!-- 
+
+        http://jsfiddle.net/uhVj6/220/
+
+        -->
+
+
         <div class="room-status-icon">
           <svg width="201px" height="201px" viewBox="0 0 201 201" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <defs>
@@ -53,36 +64,7 @@
       entries: Array
     },
     computed: {
-      // bgNextClass() {
-      //  if (this.currentEntry && this.nextEntry && this.nextEntry.start <= this.currentEntry.end) {
-      //     return 'occupied'
-      //   }
-      //   return ''
-      // },
-      // bgNextStyle() {
-      //   let progress
-      //   if (this.currentEntry) {
-      //       const eightHours = 1000 * 3600 * 8
-      //       progress = getProgressUntilEntryEnd(this.currentEntry, eightHours)
-      //   } else {
-      //     if (this.nextEntry) {
-      //         progress = getProgressUntilNextEntry(this.nextEntry)
-      //     } else {
-      //         progress = 0
-      //     }
-      //   }
-        // const percentage = 100 * (1 - progress)
-        // 
-        // returned data below  commented out to remove background animation
-        // that according to first design iteration, indicated the amt
-        // of time left before the next entry begins
-        //
-        // commented out by nick on Feb 7, 2019
-        //
-        // return //'transform: translateY(' + percentage + '%)'
-      // },
       currentEntry() {
-        // console.log(getCurrentEntry(this.entries));
         return getCurrentEntry(this.entries)
       },
       nextEntry() {

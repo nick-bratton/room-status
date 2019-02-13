@@ -1,5 +1,6 @@
 <template>
-  <div class="app" :class="modeClass" >
+  <!-- <div class="app" :class="modeClass" v-on:click="toggleDistanceMode"> -->
+  <div class="app" :class="modeClass">
     <schedule-far :entries="entries"></schedule-far>
     <schedule-close :entries="entries"></schedule-close>
   </div>

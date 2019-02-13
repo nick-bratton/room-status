@@ -17,7 +17,7 @@
         </div>
         <timer-icon :entries="entries"></timer-icon>
         <div class="room-status-time">
-          <div v-if="roomStatusClass == 'soon-free' || roomStatusClass == 'soon-occupied'">In&nbsp</div>
+          <div v-if="roomStatusClass == 'free-soon' || roomStatusClass == 'occupied-soon'">In&nbsp</div>
           <div v-else-if="roomStatusClass == 'busy' || roomStatusClass == 'free'">For&nbsp</div>
           <div class="room-status-time-amount"> {{ roomStatusTimeAmount | round }}</div>
           &nbsp

@@ -8,10 +8,8 @@
 
 <script>
 
-	import {getCurrentEntry, getProgressUntilEntryEnd, getProgressUntilNextEntry, getNextEntry, getNextFreeTime} from '@/services/calendarService'
-	import TimerIcon from './TimerIcon'
-import { setTimeout, clearInterval } from 'timers';
-import { resolve } from 'q';
+import {getCurrentEntry, getProgressUntilEntryEnd, getProgressUntilNextEntry, getNextEntry, getNextFreeTime} from '@/services/calendarService'
+import TimerIcon from './TimerIcon'
 
 	export default {
 		data() { 
@@ -24,6 +22,7 @@ import { resolve } from 'q';
 				radius: 82.5,
 				twoPi: Math.PI * 2,
 				halfPi: Math.PI / 2,
+				completionColor: '#ffffff'
 			}
 		},
 		computed: {
@@ -35,13 +34,16 @@ import { resolve } from 'q';
 			},
 			roomStatus() {
 				if (this.currentEntry && (this.timeRemaining / 60000) > 30 ) {
+					this.completionColor = '#C57BB4';
 					return 'occupied'
 				}
 				else if ( this.currentEntry && (this.timeRemaining / 60000) <= 30) {
+					this.completionColor = '#F6B053';
 					return 'free-soon' // soon free
 				}
 				else {
 					if (this.nextEntry &&  getProgressUntilNextEntry(this.nextEntry) >= 0.5) {
+						this.completionColor = '#F79D5E';
 						return 'occupied-soon' // soon busy
 					} else {
 						return 'free'
@@ -68,18 +70,36 @@ import { resolve } from 'q';
 			vm.x = canvas.width / 2;
 			vm.y = canvas.height / 2;
 			vm.context.lineWidth = 20;
-			vm.context.strokeStyle = '#ffffff';
+			vm.context.strokeStyle = vm.completionColor;
+			// 
+			// draw the outline of the background circle
+			for (let i = 0; i < 103; i++){
+				vm.context.beginPath();
+				vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * i) - vm.halfPi);
+				vm.context.stroke();
+			}
 		},
 		methods: {
 			async animate(){
 				let vm = this;
 				let i = 0;
 				let draw = setInterval(function(){
-					if (vm.completionAsInteger == 101){
+					if (vm.completionAsInteger >= 101){
 						clearInterval(draw);
 					}
 					else {
 						vm.context.clearRect(0, 0, vm.canvas.width, vm.canvas.height);
+						//
+						// draw background
+						vm.context.strokeStyle = vm.completionColor;
+						for (let i = 0; i < 103; i++){
+							vm.context.beginPath();
+							vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * i) - vm.halfPi);
+							vm.context.stroke();
+						}
+						//
+						// draw foreground 
+						vm.context.strokeStyle = '#ffffff';
 						vm.context.beginPath();
 						vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * vm.completionAsRatio) - vm.halfPi);
 						vm.context.stroke();
@@ -110,6 +130,10 @@ import { resolve } from 'q';
 	.timer-icon-canvas{
 		width: 185px;
 		height: 185px;
+	}
+
+	#canvasFG, #canvasBG{
+		position:absolute;
 	}
 
 </style>

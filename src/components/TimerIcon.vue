@@ -1,6 +1,6 @@
 <template>
 	<!-- <div v-if="roomStatusTimeAmount <= .5"> -->
-	<div class="timer-icon" v-on:click="animate" v-if="roomStatus == 'free-soon' || roomStatus != 'occupied-soon'">
+	<div class="timer-icon" v-on:click="animate" v-if="roomStatus == 'free-soon' || roomStatus == 'occupied-soon' || roomStatus == 'occupied'">
 		<canvas ref="canvas" id="canvas" width="185" height="185"></canvas>
 	</div>
 
@@ -10,6 +10,8 @@
 
 	import {getCurrentEntry, getProgressUntilEntryEnd, getProgressUntilNextEntry, getNextEntry, getNextFreeTime} from '@/services/calendarService'
 	import TimerIcon from './TimerIcon'
+import { setTimeout, clearInterval } from 'timers';
+import { resolve } from 'q';
 
 	export default {
 		data() { 
@@ -19,7 +21,7 @@
 				completionAsRatio: 0.0,
 				x: 0,
 				y: 0,
-				radius: 40,
+				radius: 82.5,
 				twoPi: Math.PI * 2,
 				halfPi: Math.PI / 2,
 			}
@@ -65,25 +67,27 @@
 			vm.context = vm.canvas.getContext("2d");
 			vm.x = canvas.width / 2;
 			vm.y = canvas.height / 2;
-			vm.context.lineWidth = 10;
+			vm.context.lineWidth = 20;
 			vm.context.strokeStyle = '#ffffff';
 		},
 		methods: {
-			test: function() {
-				var vm = this;
-				console.log(vm.x);
+			async animate(){
+				let vm = this;
+				let i = 0;
+				let draw = setInterval(function(){
+					if (vm.completionAsInteger == 101){
+						clearInterval(draw);
+					}
+					else {
+						vm.context.clearRect(0, 0, vm.canvas.width, vm.canvas.height);
+						vm.context.beginPath();
+						vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * vm.completionAsRatio) - vm.halfPi);
+						vm.context.stroke();
+						vm.completionAsInteger++;
+						vm.completionAsRatio = vm.completionAsInteger/100;
+					}
+				},50);
 			},
-			animate: function(){
-				var vm = this;
-				while (vm.completionAsInteger < 101){
-					vm.context.clearRect(0, 0, vm.canvas.width, vm.canvas.height);
-					vm.context.beginPath();
-					vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * vm.completionAsRatio) - vm.halfPi);
-					vm.context.stroke();
-					vm.completionAsInteger++;
-					vm.completionAsRatio = vm.completionAsInteger/100;
-				}
-			}
 		},
 		props: {
 			entries: Array
@@ -96,7 +100,7 @@
 
 	.timer-icon {
 		margin: auto;
-		background-color: rgba(0,0,0,.5);
+		background-color: rgba(0,0,0,0);
 		position: relative;
 		width: 185px;
 		height:185px;

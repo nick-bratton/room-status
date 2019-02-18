@@ -107,6 +107,7 @@ import TimerIcon from './TimerIcon'
 		},
 		methods: {
 			async animate(){
+
 				let vm = this;
 				let i = 0;
 				let draw = setInterval(function(){

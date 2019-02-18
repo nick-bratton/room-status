@@ -2,23 +2,15 @@
 	<div class="schedule-far" v-if="entries" :class="roomStatusClass">
 		<div class="bg-current"></div>
 		<div class="room-status-info">
-
-			<!-- <div v-if="roomStatusTimeAmount === Infinity">
-				<div class="room-status-time-free">
-					FREE
-				</div>
-			</div> -->
-
 			<div >
-				<div class="room-status-soon">
-					<div v-if="roomStatusClass !== 'free' && roomStatusClass !== 'occupied'">Soon</div>
-					<div v-else>&nbsp</div>
-				</div>
+				<div class="room-status-soon" v-if="roomStatusClass != 'free' && roomStatusClass != 'occupied'">Soon</div>
+				<div v-else class="room-status-not-soon"> &nbsp</div>
+
 				<div class="room-status-intro-text">
 					{{ roomStatusText }}
 				</div>
 
-				<div id="svg-wrapper">
+				<!-- <div id="non-free-icon-wrapper">
 					<svg id="svg-icon" v-if="roomStatusClass == 'occupied'" width="89px" height="22px" viewBox="0 0 89 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 						<g id="Iteration-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 								<g id="Busy-Far" transform="translate(-341.000000, -527.000000)" fill="#FFFFF0">
@@ -47,8 +39,7 @@
 											</g>
 									</g>
 							</g></svg>
-					<!-- <svg id="svg-icon" v-else-if="roomStatusClass == 'free'" width="201px" height="201px" viewBox="0 0 201 201" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"></svg> -->
-				</div>
+				</div> -->
 
 				<div v-if="roomStatusClass == 'free'" id="free-icon">
 					<svg width="201px" height="201px" viewBox="0 0 201 201" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -192,7 +183,7 @@
 	@import 'colors';
 	@import 'gradients';
 
-	#svg-wrapper{
+	#non-free-icon-wrapper{
 		position:absolute;
 		display: flex;
     align-items: center;
@@ -216,6 +207,12 @@
 		margin: 0 auto;
 	}
 
+	.room-status-not-soon {
+		width: 204px;
+		height: 96px;
+
+	}
+
 	.schedule-far {
 		color: white;
 		height: 100%;
@@ -233,18 +230,13 @@
 			font-size: 160px;
 			font-weight: bold;
 		}
-		.room-status-soon {
+		.room-status-soon{
 			font-size: 96px;
 			font-weight: bold;
 			float: left;
 			padding-left: 30px;
 			margin-bottom:-32px;
 		}
-		// .room-status-time-free {
-		// 	font-weight: bold;
-		// 	font-size: 160px;
-		// 	margin-top: 130px;
-		// }
 		.room-status-time{
 			font-size: 110px;
 			display:flex;

@@ -1,19 +1,17 @@
 <template>
-	<!-- <div v-if="roomStatusTimeAmount <= .5"> -->
 	<div class="timer-icon" v-on:click="animate" v-if="roomStatus == 'free-soon' || roomStatus == 'occupied-soon' || roomStatus == 'occupied'">
 		<canvas ref="canvas" id="canvas" width="185" height="185"></canvas>
-		<!-- <svg v-if="roomStatus == 'occupied'" width="89px" height="22px" viewBox="0 0 89 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-			<g id="Iteration-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-					<g id="Busy-Far" transform="translate(-341.000000, -527.000000)" fill="#FFFFF0">
-							<g id="Group" transform="translate(293.000000, 445.000000)">
-									<rect id="Rectangle" x="48" y="82" width="89" height="22" rx="9"></rect>
-							</g>
-					</g>
-			</g></svg>
-		<svg v-else-if="roomStatus == 'free-soon' || roomStatus == 'occupied-soon'" width="67px" height="99px" viewBox="0 0 67 99" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-				<defs>
-						<polygon id="path-1" points="0 0.979413861 66.657 0.979413861 66.657 99 0 99"></polygon>
-				</defs>
+		<div class="center-icon-wrapper">
+			<svg id="busy-icon" v-if="roomStatus == 'occupied'" width="89px" height="22px" viewBox="0 0 89 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<g id="Iteration-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+						<g id="Busy-Far" transform="translate(-341.000000, -527.000000)" fill="#FFFFF0">
+								<g id="Group" transform="translate(293.000000, 445.000000)">
+										<rect id="Rectangle" x="48" y="82" width="89" height="22" rx="9"></rect>
+								</g>
+						</g>
+				</g></svg>
+			<svg id="soon-icon" v-else-if="roomStatus == 'free-soon' || roomStatus == 'occupied-soon'" width="67px" height="99px" viewBox="0 0 67 99" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<defs><polygon id="path-1" points="0 0.979413861 66.657 0.979413861 66.657 99 0 99"></polygon></defs>
 				<g id="Iteration-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 						<g id="Soon-Busy-Far" transform="translate(-352.000000, -486.000000)">
 								<g id="Group" transform="translate(293.000000, 445.000000)">
@@ -30,27 +28,8 @@
 								</g>
 						</g>
 				</g></svg>
-		<svg v-else-if="roomStatus == 'free'" width="201px" height="201px" viewBox="0 0 201 201" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> -->
-			<defs>
-					<path d="M180.5,378 C129.563877,378 88,336.436123 88,285.5 C88,234.563877 129.563877,193 180.5,193 C231.436123,193 273,234.563877 273,285.5 C273,336.436123 231.436123,378 180.5,378 Z M226.001035,251.164282 C222.933063,248.10855 218.22884,248.10855 215.160868,251.164282 L166.277854,301.889437 L144.597521,279.277019 C141.529549,276.221287 136.825326,276.221287 133.757355,279.277019 C130.689383,282.332751 130.689383,287.425638 133.757355,290.48137 L160.960036,318.594107 C164.028008,321.649839 168.732231,321.649839 171.800203,318.594107 L226.001035,262.368634 C229.069006,259.312902 229.069006,254.220015 226.001035,251.164282 Z" id="path-1"></path>
-					<filter x="-5.9%" y="-5.9%" width="114.1%" height="114.1%" filterUnits="objectBoundingBox" id="filter-2">
-							<feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
-							<feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-							<feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
-					</filter>
-			</defs>
-			<g id="Iteration-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-					<g id="Free-Until-Far" transform="translate(-286.000000, -457.000000)" fill-rule="nonzero">
-							<g id="Main-Info" transform="translate(204.000000, 270.000000)">
-									<g id="Shape-Copy">
-											<use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-											<use fill="#FFFFFF" xlink:href="#path-1"></use>
-									</g>
-							</g>
-					</g>
-			</g></svg>
+		</div>
 	</div>
-
 </template>
 
 <script>
@@ -165,6 +144,19 @@ import TimerIcon from './TimerIcon'
 
 <style lang="scss" scoped>
 
+	.center-icon-wrapper{
+		height: 185px;
+		width: 185px;
+		display: flex;
+    align-items: center;
+		margin-top:-190px;
+	}
+
+	#soon-icon, #busy-icon{
+		margin: 0 auto;
+		width:50%;
+	}
+
 	.timer-icon {
 		margin: auto;
 		background-color: rgba(0,0,0,0);
@@ -172,6 +164,7 @@ import TimerIcon from './TimerIcon'
 		width: 185px;
 		height:185px;
 		z-index:100;
+		
 	}
 
 	.timer-icon-canvas{

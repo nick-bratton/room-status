@@ -60,7 +60,8 @@
 		},
 		data() {
 			return {
-					roomName: null
+					roomName: null,
+					updateInterval: null
 			}
 		},
 		components: {
@@ -152,6 +153,21 @@
 		filters: {
 			round(amount) {
 				return Math.round(amount)
+			}
+		},
+		async mounted() {
+			if (this.$route.params.user) {
+					await this.refreshRoomName()
+			}
+			this.updateInterval = setInterval(this.refreshCalendar, refreshEveryMilliSeconds)
+		},
+		beforeDestroy() {
+			clearInterval(this.updateInterval)
+		},
+		watch: {
+			"$route"() {
+					this.refreshCalendar()
+					this.refreshRoomName()
 			}
 		},
 		methods: {

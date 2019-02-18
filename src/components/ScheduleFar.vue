@@ -246,10 +246,8 @@
 			font-size: 110px;
 			display:flex;
 			margin-top: 52px;
+			justify-content: center;
 
-		}
-		.room-status-icon{
-			// padding-top: 133px;
 		}
 		.room-status-time-amount,
 		.room-status-time-units {

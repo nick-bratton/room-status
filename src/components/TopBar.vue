@@ -60,6 +60,7 @@
 		color: white;
 		z-index:1000;
 		text-transform: uppercase;
+		font-weight: bold;
 
 		> * {
 			flex-basis: 0;

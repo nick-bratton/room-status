@@ -44,7 +44,8 @@
 					<div class="room-status-time-units">{{ roomStatusTimeUnits }}</div>
 				</div>
 			</div>
-			<RoomDetailsPanel v-if="roomStatusClass != 'free'"></RoomDetailsPanel>
+			<!-- <RoomDetailsPanel v-if="roomStatusClass != 'free'"></RoomDetailsPanel> -->
+			<RoomDetailsPanel ></RoomDetailsPanel>
 		</div>
 	</div>
 </template>
@@ -55,6 +56,8 @@
 	import TimerIcon from './TimerIcon'
 	import TopBar from './TopBar.vue'
 	import RoomDetailsPanel from './RoomDetailsPanel.vue'
+
+	const refreshEveryMilliSeconds = 60000
 
 	export default {
 		props: {

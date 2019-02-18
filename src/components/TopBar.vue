@@ -30,7 +30,14 @@
 		filters: {
 			niceRoomName(rawRoomName) {
 				if (!rawRoomName) return rawRoomName
-				return rawRoomName.replace(/^room(-|–)(ber|muc)(-|–)/i, "")
+				else 
+					rawRoomName = rawRoomName.replace(/^room(-|–)(ber|muc)(-|–)/i, "")
+					// remove the (x ppl)
+					//
+					if (rawRoomName.indexOf('(') != 0){
+						rawRoomName = rawRoomName.slice(0,rawRoomName.indexOf('('))
+					}
+				return rawRoomName
 			},
 			niceTime(date) {
 				const hours = leftPad(date.getHours(), 2, '0')

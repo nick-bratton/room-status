@@ -45,7 +45,7 @@
 				</div>
 			</div>
 			<!-- <RoomDetailsPanel v-if="roomStatusClass != 'free'"></RoomDetailsPanel> -->
-			<RoomDetailsPanel ></RoomDetailsPanel>
+			<RoomDetailsPanel></RoomDetailsPanel>
 		</div>
 	</div>
 </template>

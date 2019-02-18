@@ -44,6 +44,7 @@
 					<div class="room-status-time-units">{{ roomStatusTimeUnits }}</div>
 				</div>
 			</div>
+			<RoomDetailsPanel v-if="roomStatusClass != 'free'"></RoomDetailsPanel>
 		</div>
 	</div>
 </template>
@@ -53,6 +54,7 @@
 	import {getCurrentEntry, getProgressUntilEntryEnd, getProgressUntilNextEntry, getNextEntry, getNextFreeTime} from '@/services/calendarService'
 	import TimerIcon from './TimerIcon'
 	import TopBar from './TopBar.vue'
+	import RoomDetailsPanel from './RoomDetailsPanel.vue'
 
 	export default {
 		props: {
@@ -66,7 +68,8 @@
 		},
 		components: {
 			TimerIcon,
-			TopBar
+			TopBar,
+			RoomDetailsPanel
 		},
 		computed: {
 			currentEntry() {
@@ -217,13 +220,13 @@
 		height: 100%;
 		text-align: center;
 		display: flex;
-		padding-top:55px;
+		// padding-top:55px;
 
 		.room-status-info {
 			position: relative;
 			margin-left: auto;
 			margin-right: auto;
-			margin-top:75px;
+			margin-top:171px;
 		}
 		.room-status-intro-text {
 			font-size: 160px;
@@ -239,7 +242,8 @@
 		.room-status-time{
 			font-size: 110px;
 			display:flex;
-			margin-top:80px;
+			margin-top: 52px;
+
 		}
 		.room-status-icon{
 			// padding-top: 133px;

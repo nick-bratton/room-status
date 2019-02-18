@@ -245,7 +245,7 @@
 		.room-status-time{
 			font-size: 110px;
 			display:flex;
-			margin-top: 52px;
+			margin-top: 42px;
 			justify-content: center;
 
 		}

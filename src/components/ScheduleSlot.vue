@@ -1,6 +1,6 @@
 <template>
 	<div class="schedule-slot" :class="{free: entry.type === 'free'}">
-
+		<!-- THESE SLOTS ARE FOR TIME PERIODS THAT HAVE BEEN BOOKED -->
 		<div v-if="entry.type !== 'free'" class="slot-content-booked">
 			<div class="user-icon">
 					<!--<svg v-if="roomStatus == 'free'" width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -45,18 +45,11 @@
 				<div class="entry-time">{{entry.start | hhmm}} — {{entry.end | hhmm}}</div>
 			</div>
 		</div> 
-
+		<!-- THESE SLOTS ARE FOR TIME PERIODS THAT ARE FREE -->
 		<div v-else class="slot-content-free">
 			<div class="free-icon">FREE</div>
-			<div class="free-data">For <span style="font-weight:bolder">3h</span> 1230: - 15:30</div>
+			<div class="free-data">For <span style="font-weight:bolder">3h</span> 12:30 - 15:30</div>
 		</div>
-
-
-		<!-- <div class="attendee" v-for="(attendee, attendeeIndex) in attendees"
-				v-bind:key="attendeeIndex" :class="{organizer: attendee.isOrganizer}">
-			{{attendee.name}}
-		</div> -->
-
 	</div>
 </template>
 
@@ -165,8 +158,6 @@
 		padding-left: 32px;
 		padding-top:4px;
 	}
-
-
 	.entry-time{
 		font-size: 28px;
 		font-weight:bold;

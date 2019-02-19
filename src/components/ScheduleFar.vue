@@ -239,7 +239,7 @@
 			font-size: 96px;
 			font-weight: bold;
 			float: left;
-			padding-left: 30px;
+			padding-left: 67px;
 			margin-bottom:-32px;
 		}
 		.room-status-time{

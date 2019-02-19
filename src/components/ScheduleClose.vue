@@ -143,7 +143,7 @@
 				overflow: auto;
 				background-image: $gradient-soon-busy;
 				.day-indicator {
-						background-color: black;
+						background-color: none;
 						color: white;
 						height: 100px;
 						font-size: 40px;

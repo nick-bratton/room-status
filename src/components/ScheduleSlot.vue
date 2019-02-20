@@ -41,14 +41,15 @@
 					</svg> -->
 			</div>
 			<div class="entry-data-wrapper">
-				<div class="entry-attendee" v-for="(attendee, attendeeIndex) in attendees" v-bind:key="attendeeIndex">{{attendee.name}}</div>
+				<div class="entry-attendee" v-for="(attendee, attendeeIndex) in attendees" v-bind:key="attendeeIndex" v-if="{organizer: attendee.isOrganizer}">{{attendee.name}}</div>
 				<div class="entry-time">{{entry.start | hhmm}} — {{entry.end | hhmm}}</div>
 			</div>
 		</div> 
 		<!-- THESE SLOTS ARE FOR TIME PERIODS THAT ARE FREE -->
 		<div v-else class="slot-content-free">
 			<div class="free-icon">FREE</div>
-			<div class="free-data">For <span style="font-weight:bolder">3h</span> 12:30 - 15:30</div>
+			<!-- <div class="free-data">For <span style="font-weight:bolder">3h</span> 12:30 - 15:30</div> -->
+			<div class="free-data">{{entry.start | hhmm}} — {{entry.end | hhmm}}</div>
 		</div>
 	</div>
 </template>
@@ -105,6 +106,7 @@
 		},
 		methods: {
 			isOrganizer(attendeeName) {
+				console.log(attendeeName, this.entry.organizer && this.entry.organizer.emailAddress && this.entry.organizer.emailAddress.name === attendeeName);
 				return this.entry.organizer && this.entry.organizer.emailAddress && this.entry.organizer.emailAddress.name === attendeeName
 			}
 		}

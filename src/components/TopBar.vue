@@ -34,7 +34,7 @@
 					rawRoomName = rawRoomName.replace(/^room(-|–)(ber|muc)(-|–)/i, "")
 					// remove the (x ppl)
 					//
-					if (rawRoomName.indexOf('(') != 0){
+					if (rawRoomName.indexOf('(') != -1){
 						rawRoomName = rawRoomName.slice(0,rawRoomName.indexOf('('))
 					}
 				return rawRoomName

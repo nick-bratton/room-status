@@ -95,10 +95,6 @@
 					return 0
 				})
 			},
-			bgProgressStyle() {
-				const progress = getProgressUntilEntryEnd(this.entry)
-				return 'transform: scaleX(' + progress + ')'
-			},
 			totalTime() {
 				return distanceInWordsStrict(this.entry.end, this.entry.start)
 			}

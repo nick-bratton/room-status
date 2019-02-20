@@ -44,7 +44,7 @@
 					<div class="room-status-time-units">{{ roomStatusTimeUnits }}</div>
 				</div>
 			</div>
-			<RoomDetailsPanel :roomStatus="roomStatus" v-if="roomStatusClass != 'free'"></RoomDetailsPanel>
+			<RoomDetailsPanel :roomStatus="roomStatus" :organizer="currentOrganizer()" v-if="roomStatusClass != 'free'"></RoomDetailsPanel>
 		</div>
 	</div>
 </template>
@@ -64,9 +64,10 @@
 		},
 		data() {
 			return {
-					roomName: null,
-					updateInterval: null,
-					roomStatus: null
+				roomName: null,
+				updateInterval: null,
+				roomStatus: null,
+				// currentOrganizer: null,
 			}
 		},
 		components: {
@@ -75,6 +76,23 @@
 			RoomDetailsPanel
 		},
 		computed: {
+			attendees() {
+				return this.entry.attendees.map(attendee => {
+					const isOrganizer = this.isOrganizer(attendee)
+					return {
+						name: attendee,
+						isOrganizer
+					}
+				}).sort((a,b) => {
+					if(a.isOrganizer && !(b.isOrganizer)) {
+						return -1
+					}
+					if(!(a.isOrganizer) && b.isOrganizer) {
+						return 1
+					}
+					return 0
+				})
+			},
 			currentEntry() {
 				return getCurrentEntry(this.entries)
 			},
@@ -184,6 +202,21 @@
 			async refreshRoomName() {
 				const roomName = await getRoomName(this.$route.params.user)
 				this.roomName = roomName
+			},
+			currentOrganizer() {
+				if (this.currentEntry){
+					for (let attendee of this.currentEntry.attendees){
+						if (this.currentEntry.organizer && this.currentEntry.organizer.emailAddress && this.currentEntry.organizer.emailAddress.name === attendee){
+							return attendee
+						}
+					}
+				}
+				else{
+					return null
+				}
+			},
+			isOrganizer(attendeeName) {
+				return this.currentEntry.organizer && this.currentEntry.organizer.emailAddress && this.currentEntry.organizer.emailAddress.name === attendeeName
 			}
 		}
 	}

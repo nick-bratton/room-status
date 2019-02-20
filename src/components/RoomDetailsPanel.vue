@@ -40,7 +40,8 @@
 				</svg>
 			</div>
 			<div class="metadata">
-				<div id="name">David Normington</div>
+				<!-- <div id="name">David Normington</div> -->
+				<div id="name">{{organizer}}</div>
 				<div id="time">13:00 - 14:30</div>
 			</div>
 		</div>
@@ -51,7 +52,8 @@
 
 export default {
 	props: {
-		roomStatus: null
+		roomStatus: null,
+		organizer: null
 	}
 }
 

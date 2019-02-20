@@ -37,10 +37,11 @@
 
 				<div class="room-status-time">
 					<div v-if="roomStatusClass == 'free-soon' || roomStatusClass == 'occupied-soon'">In&nbsp</div>
-					<div v-else-if="roomStatusClass == 'occupied' || roomStatusClass == 'free'">For&nbsp</div>
-					<div class="room-status-time-amount"> {{ roomStatusTimeAmount | round }}</div>
+					<div v-else-if="(roomStatusClass == 'occupied' || roomStatusClass == 'free') && roomStatusTimeAmount != Infinity">For&nbsp</div>
+					<div class="room-status-time-amount" v-if="roomStatusTimeAmount != Infinity"> {{ roomStatusTimeAmount | round }}</div>
+					<div class="room-status-time-amount" v-else>All day</div>
 					&nbsp
-					<div class="room-status-time-units">{{ roomStatusTimeUnits }}</div>
+					<div v-if="roomStatusTimeAmount != Infinity" class="room-status-time-units">{{ roomStatusTimeUnits }}</div>
 				</div>
 			</div>
 			<RoomDetailsPanel :roomStatus="roomStatus" :organizer="currentOrganizer()" :booking="currentEntry" v-if="roomStatusClass != 'free'"></RoomDetailsPanel>

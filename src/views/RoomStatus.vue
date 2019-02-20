@@ -45,7 +45,6 @@
             }
         },
         methods: {
-
             async refreshCalendar() {
                 const rawEntries = await getCalendarEntries(this.$route.params.user)
                 if (!rawEntries || rawEntries.error) {

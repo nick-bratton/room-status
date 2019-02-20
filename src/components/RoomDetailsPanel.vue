@@ -40,9 +40,9 @@
 				</svg>
 			</div>
 			<div class="metadata">
-				<!-- <div id="name">David Normington</div> -->
 				<div id="name">{{organizer}}</div>
-				<div id="time">13:00 - 14:30</div>
+				<!-- <div id="time">13:00 - 14:30</div> -->
+				<div id="time">{{booking.start | hhmm}} — {{booking.end | hhmm}}</div>
 			</div>
 		</div>
 	</div>
@@ -50,12 +50,20 @@
 
 <script>
 
-export default {
-	props: {
-		roomStatus: null,
-		organizer: null
+	import {format} from 'date-fns'
+
+	export default {
+		props: {
+			roomStatus: null,
+			organizer: null,
+			booking: null
+		},
+		filters: {
+			hhmm(v) {
+				return format(new Date(v), "HH:mm")
+			},
+		},
 	}
-}
 
 </script>
 

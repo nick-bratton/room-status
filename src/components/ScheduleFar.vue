@@ -44,7 +44,7 @@
 					<div class="room-status-time-units">{{ roomStatusTimeUnits }}</div>
 				</div>
 			</div>
-			<RoomDetailsPanel :roomStatus="roomStatus" :organizer="currentOrganizer()" v-if="roomStatusClass != 'free'"></RoomDetailsPanel>
+			<RoomDetailsPanel :roomStatus="roomStatus" :organizer="currentOrganizer()" :booking="currentEntry" v-if="roomStatusClass != 'free'"></RoomDetailsPanel>
 		</div>
 	</div>
 </template>

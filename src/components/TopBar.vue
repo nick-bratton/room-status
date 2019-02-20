@@ -81,6 +81,14 @@
 			text-align: right;
 		}
 
+		.room-name{
+			background-color:rgba(255,255,255,0.2);
+			border-radius: 41px;
+			padding-left: 48px;
+			padding-right:48px;
+			padding-top:12px;
+			height:82px;
+		}
 	}
 
 </style>

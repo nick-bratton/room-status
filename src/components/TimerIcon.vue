@@ -1,7 +1,7 @@
 <template>
-	<div class="timer-icon" v-on:click="animate" v-if="roomStatus == 'free-soon' || roomStatus == 'occupied-soon' || roomStatus == 'occupied'">
+	<div class="timer-icon" v-if="roomStatus == 'free-soon' || roomStatus == 'occupied-soon' || roomStatus == 'occupied'">
 		<canvas ref="canvas" id="canvas" width="185" height="185"></canvas>
-		<div class="center-icon-wrapper">
+		<div class="center-icon-wrapper" >
 			<svg id="busy-icon" v-if="roomStatus == 'occupied'" width="89px" height="22px" viewBox="0 0 89 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 				<g id="Iteration-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 						<g id="Busy-Far" transform="translate(-341.000000, -527.000000)" fill="#FFFFF0">
@@ -52,6 +52,14 @@ import TimerIcon from './TimerIcon'
 			}
 		},
 		computed: {
+			remainingPercentageOfLastThirtyMinutes(){
+				completionAsInt = this.timeRemaining * (10/3);
+				console.log(completionAsInt);
+				return completionAsInt
+				// y = (10/3) * x 
+				// where x is the time remaining 
+				// and y is the percentage from 0 - 100
+			},
 			currentEntry() {
 				return getCurrentEntry(this.entries)
 			},
@@ -106,34 +114,34 @@ import TimerIcon from './TimerIcon'
 			}
 		},
 		methods: {
-			async animate(){
+			animate: function(event){
 
-				let vm = this;
-				let i = 0;
-				let draw = setInterval(function(){
-					if (vm.completionAsInteger >= 101){
-						clearInterval(draw);
-					}
-					else {
-						vm.context.clearRect(0, 0, vm.canvas.width, vm.canvas.height);
-						//
-						// draw background
-						vm.context.strokeStyle = vm.completionColor;
-						for (let i = 0; i < 103; i++){
-							vm.context.beginPath();
-							vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * i) - vm.halfPi);
-							vm.context.stroke();
-						}
-						//
-						// draw foreground 
-						vm.context.strokeStyle = '#ffffff';
-						vm.context.beginPath();
-						vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * vm.completionAsRatio) - vm.halfPi);
-						vm.context.stroke();
-						vm.completionAsInteger++;
-						vm.completionAsRatio = vm.completionAsInteger/100;
-					}
-				},50);
+			// 	let vm = this;
+			// 	let i = 0;
+			// 	let draw = setInterval(function(){
+			// 		if (vm.completionAsInteger >= 101){
+			// 			clearInterval(draw);
+			// 		}
+			// 		else {
+			// 			vm.context.clearRect(0, 0, vm.canvas.width, vm.canvas.height);
+			// 			//
+			// 			// draw background
+			// 			vm.context.strokeStyle = vm.completionColor;
+			// 			for (let i = 0; i < 103; i++){
+			// 				vm.context.beginPath();
+			// 				vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * i) - vm.halfPi);
+			// 				vm.context.stroke();
+			// 			}
+			// 			//
+			// 			// draw foreground 
+			// 			vm.context.strokeStyle = '#ffffff';
+			// 			vm.context.beginPath();
+			// 			vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * vm.completionAsRatio) - vm.halfPi);
+			// 			vm.context.stroke();
+			// 			vm.completionAsInteger++;
+			// 			vm.completionAsRatio = vm.completionAsInteger/100;
+			// 		}
+			// 	},50);
 			},
 		},
 		props: {
@@ -164,8 +172,7 @@ import TimerIcon from './TimerIcon'
 		position: relative;
 		width: 185px;
 		height:185px;
-		z-index:100;
-		
+		z-index:4;
 	}
 
 	.timer-icon-canvas{

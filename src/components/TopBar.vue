@@ -48,7 +48,7 @@
 		methods: {
 			refreshTime() {
 				this.currentTime = new Date()
-			}
+			},
 		}
 	}
 </script>
@@ -65,7 +65,7 @@
 		font-size: 60px;
 		background-color: rgba(0,0,0,.24);
 		color: white;
-		z-index:1000;
+		z-index:3;
 		text-transform: uppercase;
 		font-weight: bold;
 

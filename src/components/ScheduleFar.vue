@@ -33,7 +33,7 @@
 					</svg>
 				</div>
 
-				<timer-icon :entries="entries"></timer-icon>
+				<timer-icon :entries="entries" :timeRemaining="timeRemaining"></timer-icon>
 
 				<div class="room-status-time">
 					<div v-if="roomStatusClass == 'free-soon' || roomStatusClass == 'occupied-soon'">In&nbsp</div>
@@ -260,6 +260,7 @@
 		height: 100%;
 		text-align: center;
 		display: flex;
+		// z-index:1;
 		// padding-top:55px;
 
 		.room-status-info {

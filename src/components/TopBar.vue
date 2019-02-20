@@ -86,7 +86,7 @@
 			border-radius: 41px;
 			padding-left: 48px;
 			padding-right:48px;
-			padding-top:12px;
+			padding-top:11px;
 			height:82px;
 		}
 	}

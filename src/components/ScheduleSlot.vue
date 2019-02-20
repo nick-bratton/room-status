@@ -41,7 +41,7 @@
 					</svg> -->
 			</div>
 			<div class="entry-data-wrapper">
-				<div class="entry-attendee">David Normington</div>
+				<div class="entry-attendee" v-for="(attendee, attendeeIndex) in attendees" v-bind:key="attendeeIndex">{{attendee.name}}</div>
 				<div class="entry-time">{{entry.start | hhmm}} — {{entry.end | hhmm}}</div>
 			</div>
 		</div> 

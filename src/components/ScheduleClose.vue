@@ -1,6 +1,5 @@
 <template>
 		<div class="schedule-close" v-if="entries">
-			<TopBar :room-name="roomName"></TopBar>
 			<div class="content-wrapper"> 
 				<div class="day-header">Today</div>
 					<div v-for="(entry, entryIndex) in shownEntries" v-bind:key="entryIndex">

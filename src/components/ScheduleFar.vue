@@ -1,6 +1,5 @@
 <template>
 	<div class="schedule-far" v-if="entries" :class="roomStatusClass">
-		<TopBar :room-name="roomName"></TopBar>
 		<div class="bg-current"></div>
 		<div class="room-status-info">
 			<div >

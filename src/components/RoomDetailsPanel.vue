@@ -41,7 +41,6 @@
 			</div>
 			<div class="metadata">
 				<div id="name">{{organizer}}</div>
-				<!-- <div id="time">13:00 - 14:30</div> -->
 				<div id="time">{{booking.start | hhmm}} — {{booking.end | hhmm}}</div>
 			</div>
 		</div>

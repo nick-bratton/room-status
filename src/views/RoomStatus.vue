@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <!-- <TopBar :room-name="roomName"></TopBar> -->
+        <TopBar :room-name="roomName"></TopBar>
         <Schedule :entries="calendarEntries"/>
     </div>
 </template>

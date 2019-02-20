@@ -2,7 +2,7 @@
 	<div class="room-details-panel">
 		<div id="wrapper">
 			<div class="user-icon">
-				<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<svg v-if="roomStatus == 'occupied'" width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 					<g id="Iteration-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 							<g id="Busy-Far" transform="translate(-176.000000, -826.000000)">
 									<g id="Current-Meeting" transform="translate(135.000000, 804.000000)">
@@ -14,7 +14,7 @@
 							</g>
 					</g>
 				</svg>
-				<!-- <svg v-else-if="roomStatus == 'occupied-soon'" width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<svg v-else-if="roomStatus == 'occupied-soon'" width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 					<g id="Iteration-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 							<g id="Soon-Busy-Far" transform="translate(-176.000000, -826.000000)">
 									<g id="Current-Meeting" transform="translate(135.000000, 804.000000)">
@@ -37,7 +37,7 @@
 									</g>
 							</g>
 					</g>
-				</svg> -->
+				</svg>
 			</div>
 			<div class="metadata">
 				<div id="name">David Normington</div>
@@ -48,6 +48,12 @@
 </template>å
 
 <script>
+
+export default {
+	props: {
+		roomStatus: null
+	}
+}
 
 </script>
 

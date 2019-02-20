@@ -48,7 +48,7 @@ import TimerIcon from './TimerIcon'
 				radius: 82.5,
 				twoPi: Math.PI * 2,
 				halfPi: Math.PI / 2,
-				completionColor: '#ffffff'
+				completionColor: '#ffffff',
 			}
 		},
 		computed: {

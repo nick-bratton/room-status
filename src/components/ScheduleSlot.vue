@@ -105,7 +105,6 @@
 		},
 		methods: {
 			isOrganizer(attendeeName) {
-				console.log(attendeeName, this.entry.organizer && this.entry.organizer.emailAddress && this.entry.organizer.emailAddress.name === attendeeName);
 				return this.entry.organizer && this.entry.organizer.emailAddress && this.entry.organizer.emailAddress.name === attendeeName
 			}
 		}

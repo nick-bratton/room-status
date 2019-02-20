@@ -44,8 +44,7 @@
 					<div class="room-status-time-units">{{ roomStatusTimeUnits }}</div>
 				</div>
 			</div>
-			<!-- <RoomDetailsPanel v-if="roomStatusClass != 'free'"></RoomDetailsPanel> -->
-			<RoomDetailsPanel v-if="roomStatusClass != 'free'"></RoomDetailsPanel>
+			<RoomDetailsPanel :roomStatus="roomStatus" v-if="roomStatusClass != 'free'"></RoomDetailsPanel>
 		</div>
 	</div>
 </template>
@@ -66,7 +65,8 @@
 		data() {
 			return {
 					roomName: null,
-					updateInterval: null
+					updateInterval: null,
+					roomStatus: null
 			}
 		},
 		components: {
@@ -98,15 +98,19 @@
 			},
 			roomStatusClass() {
 				if (this.currentEntry && (this.timeRemaining / 60000) > 30 ) {
+					this.roomStatus = "occupied";
 					return 'occupied'
 				}
 				else if ( this.currentEntry && (this.timeRemaining / 60000) <= 30) {
+					this.roomStatus = "free-soon";
 					return 'free-soon' // soon free
 				}
 				else {
 					if (this.nextEntry &&  getProgressUntilNextEntry(this.nextEntry) >= 0.5) {
+						this.roomStatus = "occupied-soon";
 						return 'occupied-soon' // soon busy
 					} else {
+						this.roomStatus = "free";
 						return 'free'
 					}
 				}

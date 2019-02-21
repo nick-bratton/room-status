@@ -1,6 +1,6 @@
 <template>
 	<div class="schedule-far" v-if="entries" :class="roomStatusClass">
-		<div class="bg-current"></div>
+		<!-- <div class="bg-current"></div> -->
 		<div class="room-status-info">
 			<div >
 				<div class="room-status-soon" v-if="roomStatusClass != 'free' && roomStatusClass != 'occupied'">Soon</div>

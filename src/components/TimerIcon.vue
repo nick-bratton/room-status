@@ -103,7 +103,7 @@
 			clearInterval(this.updateInterval);
 		},
 		methods: {
-			drawBackround: function(){
+			drawBackground: function(){
 				var vm = this;
 				vm.canvas = vm.$refs.canvas;
 				vm.context = vm.canvas.getContext("2d");

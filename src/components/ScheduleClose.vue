@@ -140,15 +140,12 @@
 
 		.schedule-close {
 				overflow: auto;
-				background-image: $gradient-soon-busy;
 				.day-indicator {
-						background-color: none;
 						color: white;
 						height: 100px;
 						font-size: 72px;
 						font-weight:bold;
 						margin-left:79px;
-						// padding: 45px 30px 5px;
 				}
 				.content-wrapper{
 					margin-top:158px;

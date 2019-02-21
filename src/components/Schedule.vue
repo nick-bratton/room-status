@@ -1,6 +1,5 @@
 <template>
 	<div class="app" :class="modeClass" v-on:click="toggleDistanceMode">
-	<!-- <div class="app" :class="modeClass" > -->
 		<div class="background" :class="roomStatus"></div>
 		<schedule-far :entries="entries"></schedule-far>
 		<schedule-close :entries="entries"></schedule-close>
@@ -11,7 +10,7 @@
 	import store from '../store'
 	import ScheduleClose from './ScheduleClose'
 	import ScheduleFar from './ScheduleFar'
-	import {getCurrentEntry, getProgressUntilEntryEnd, getProgressUntilNextEntry, getNextEntry, getNextFreeTime} from '@/services/calendarService'
+	import {getCurrentEntry, getNextEntry, getNextFreeTime, getProgressUntilNextEntry} from '@/services/calendarService'
 
 
 	const refreshEveryMilliSeconds = 10000;
@@ -61,31 +60,24 @@
 			toggleDistanceMode() {
 				store.commit('toggleDistanceMode')
 			},
-			getRoomStatus(){
+			async getRoomStatus(){
 				if (this.currentEntry && (this.timeRemaining / 60000) > 30 ) {
-					console.log('occupied');
 					this.roomStatus = 'occupied';
-					return 'occupied'
 				}
 				else if (this.currentEntry && (this.timeRemaining / 60000) <= 30) {
-					// this.roomStatus = "free-soon";
-					console.log('free-soon'); // soon free
-					return 'free-soon'
+					this.roomStatus = "free-soon";
 				}
 				else {
 					if (this.nextEntry && getProgressUntilNextEntry(this.nextEntry) >= 0.5) {
-						// this.roomStatus = "occupied-soon";
-						console.log('occupied-soon'); // soon busy
-						return 'occupied-soon'
+						this.roomStatus = "occupied-soon";
 					} else {
-						// this.roomStatus = "free";
-						console.log('free');
-						return 'free'
+						this.roomStatus = "free";
 					}
 				}
 			}
 		},
 		async mounted(){
+			this.getRoomStatus();
 			this.updateInterval = setInterval(this.getRoomStatus, refreshEveryMilliSeconds);
 		}
 	}

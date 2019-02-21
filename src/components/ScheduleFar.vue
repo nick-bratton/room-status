@@ -33,7 +33,7 @@
 					</svg>
 				</div>
 
-				<timer-icon :entries="entries" :timeRemaining="timeRemaining"></timer-icon>
+				<timer-icon :entries="entries" :timeRemaining="timeRemaining" v-if="roomStatus == 'free-soon' || roomStatus == 'occupied-soon' || roomStatus == 'occupied'"></timer-icon>
 
 				<div class="room-status-time">
 					<div v-if="roomStatusClass == 'free-soon' || roomStatusClass == 'occupied-soon'">In&nbsp</div>

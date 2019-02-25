@@ -121,12 +121,12 @@
 		}
 
 		.room-name{
-			padding-left: 48px;
+			padding-left: 38px;	// 48px in sebastian's designs
 			padding-top:11px;
 		}
 
 		#burger{
-			margin-right: 41px;
+			margin-right: 31px;	// 41px in sebastian's designs
 			width: 37px;
 			height: 31px;
 		}

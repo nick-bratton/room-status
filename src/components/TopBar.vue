@@ -85,7 +85,7 @@
 		top:0px;
 		display: flex;
 		align-items: center;
-		padding: 60px 30px;
+		// padding: 60px 30px;
 		height: 128px;
 		width: 100%;
 		font-size: 60px;
@@ -105,6 +105,7 @@
 
 		.current-time {
 			text-align: right;
+			margin-right:64px;
 		}
 
 		.room-name-wrapper{
@@ -114,11 +115,9 @@
 			border-radius: 41px;
 			width: 350px;
 			height:82px;
+			margin-left:37px;
 			justify-content: space-between;
 			flex-shrink: 0;
-			// text-overflow: ellipsis;
-			// overflow: hidden;
-			// white-space: nowrap;
 		}
 
 		.room-name{

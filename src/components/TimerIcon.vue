@@ -51,6 +51,7 @@
 				twoPi: Math.PI * 2,
 				halfPi: Math.PI / 2,
 				completionColor: '#ffffff',
+				arcLength: 0
 			}
 		},
 		computed: {
@@ -94,7 +95,7 @@
 		async mounted(){
 			var vm = this;
 			vm.drawBackground();
-			if (vm.roomStatus == 'free-soon' || vm.roomStatus == 'occupied-soon'){ // waiting on design logic from sebastian for 'busy' case
+			if (vm.roomStatus == 'free-soon' || vm.roomStatus == 'occupied'){ // waiting on design logic from sebastian for 'busy' case
 				vm.showRoomStatusProgress();
 				vm.updateInterval = setInterval(vm.showRoomStatusProgress, refreshEveryMilliSeconds);
 			}
@@ -119,7 +120,10 @@
 			},
 			showRoomStatusProgress: function(){
 				let vm = this;
-				let arcLength = 100 - ((vm.timeRemaining / 60000) * (10/3));
+				let scaleFactor;
+				if (this.roomStatus == 'free-soon'){scaleFactor = (10/3);}
+				else {scaleFactor = 1;}
+				vm.arcLength = 100 - ((vm.timeRemaining / 60000) * scaleFactor);
 				vm.context.clearRect(0, 0, vm.canvas.width, vm.canvas.height);
 				vm.context.strokeStyle = vm.completionColor;
 				for (let i = 0; i < 103; i++){
@@ -129,7 +133,7 @@
 				}
 				vm.context.strokeStyle = '#ffffff';
 				vm.context.beginPath();
-				vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * (arcLength * 0.01)) - vm.halfPi);
+				vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * (vm.arcLength * 0.01)) - vm.halfPi);
 				vm.context.stroke();
 			},
 		},

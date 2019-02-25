@@ -12,9 +12,9 @@
 	import ScheduleFar from './ScheduleFar'
 	import {getCurrentEntry, getNextEntry, getNextFreeTime, getProgressUntilNextEntry} from '@/services/calendarService'
 
-	const refreshEveryMilliSeconds = 60000;
-
-	export default {
+	const refreshEveryMilliSeconds = 1000;	// this is way to short but the point is that
+																					// right now the right prop isn't beeing computer on the first render
+	export default {												// to set the background color from the room status
 		name: 'Schedule',
 		props: {
 			msg: String,

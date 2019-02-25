@@ -94,7 +94,7 @@
 	.app {
 		width: 100%;
 		margin: auto;
-		background-color: black;
+		background-color: none;
 		position: relative;
 		flex-grow: 1;
 		.schedule-close,

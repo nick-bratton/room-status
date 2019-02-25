@@ -4,7 +4,7 @@
 			<div class="room-name" v-if="roomName">
 				{{ roomName | niceRoomName }}
 			</div>
-			<svg id="burger" width="37px" height="31px" viewBox="0 0 37 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+			<svg id="burger" viewBox="0 0 37 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 					<g id="Iteration-4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 							<g id="Busy-Far" transform="translate(-310.000000, -49.000000)">
 									<g id="Header">
@@ -47,14 +47,22 @@
 		},
 		filters: {
 			niceRoomName(rawRoomName) {
+				let maxCharsInRoomName = 5;
 				if (!rawRoomName) return rawRoomName
 				else 
 					rawRoomName = rawRoomName.replace(/^room(-|–)(ber|muc)(-|–)/i, "")
-					// remove the (x ppl)
 					//
+					// remove the (x ppl)...
 					if (rawRoomName.indexOf('(') != -1){
-						rawRoomName = rawRoomName.slice(0,rawRoomName.indexOf('('))
+						rawRoomName = rawRoomName.slice(0,rawRoomName.indexOf('(')-1)
 					}
+					//
+					// trim the string if it's too long...
+					if (rawRoomName.length >= maxCharsInRoomName){
+						rawRoomName = rawRoomName.slice(0,maxCharsInRoomName);
+						rawRoomName += '...';
+					}
+
 				return rawRoomName
 			},
 			niceTime(date) {
@@ -107,18 +115,22 @@
 			width: 350px;
 			height:82px;
 			justify-content: space-between;
+			flex-shrink: 0;
+			// text-overflow: ellipsis;
+			// overflow: hidden;
+			// white-space: nowrap;
 		}
 
 		.room-name{
 			padding-left: 48px;
-			padding-right:48px;
 			padding-top:11px;
 		}
 
 		#burger{
 			margin-right: 41px;
+			width: 37px;
+			height: 31px;
 		}
-
 	}
 
 </style>

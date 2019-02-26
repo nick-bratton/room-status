@@ -219,7 +219,7 @@
 		}
 
 		.swipe-down-icon{
-			position:absolute;
+			position:fixed;
 			left: 365px;
 			top:982px;
 		}

@@ -1,15 +1,22 @@
 <template>
-		<div class="schedule-close" v-if="entries" v-on:scroll="handleScroll">
-			<div class="content-wrapper"> 
-				<div class="day-header">Today</div>
-					<div v-for="(entry, entryIndex) in shownEntries" v-bind:key="entryIndex">
-							<div class="day-indicator" v-if="isDifferentDay(entryIndex)">
-									{{ entry.start | niceDay }}
-							</div>
-							<ScheduleSlot class="div-slot" :entry="entry" />
-					</div>
-				</div>
+	<div class="schedule-close" v-if="entries" v-on:scroll="handleScroll">
+		<div class="content-wrapper" ref="wrapper"> 
+			<div class="day-header">Today</div>
+			<div v-for="(entry, entryIndex) in shownEntries" v-bind:key="entryIndex">
+				<div class="day-indicator" v-if="isDifferentDay(entryIndex)">{{ entry.start | niceDay }}</div>
+				<ScheduleSlot class="div-slot" :entry="entry"></ScheduleSlot>
+			</div>
 		</div>
+		<div class="swipe-down-icon" v-if="contentOverflowsViewport">
+			<svg width="28px" height="20px" viewBox="0 0 28 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<g id="Iteration-4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.85">
+				<g id="Soon-Busy-Close" transform="translate(-365.000000, -982.000000)" fill="#FFFFFF">
+					<polygon id="Triangle" transform="translate(378.571429, 992.000000) scale(1, -1) translate(-378.571429, -992.000000) " points="378.571429 982 392.142857 1002 365 1002"></polygon>
+				</g>
+				</g>
+			</svg>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -36,6 +43,7 @@
 				return {
 					roomName: null,
 					updateInterval: null,
+					contentOverflowsViewport: false,
 				}
 			},
 			components: {
@@ -101,7 +109,6 @@
 					}
 				},
 				handleScroll(event){
-
 					for (let i = 0; i < event.path[0].children[0].children.length; i++){
 						let c = event.path[0].children[0].children[i];
 						if(c.getBoundingClientRect().top < fadeOutThresholdTop){
@@ -116,10 +123,13 @@
 				},
 			},
 			async mounted() {
-				if (this.$route.params.user) {
-					await this.refreshRoomName()
-				}
+				if (this.$route.params.user) {await this.refreshRoomName()}
 				this.updateInterval = setInterval(this.refreshCalendar, refreshEveryMilliSeconds)
+				if (this.$refs.wrapper.getBoundingClientRect().height > 840){
+					console.log('entries overflow the viewport...show the down arrow')
+					this.contentOverflowsViewport = true;
+				}
+
 			},
 			beforeDestroy() {
 				clearInterval(this.updateInterval)
@@ -202,7 +212,16 @@
 			}
 			.content-wrapper{
 				margin-top:158px;
+				padding-bottom: 42px;
+				// -webkit-mask-image: src('../assets/schedule-close-mask-bottom.html');
+  			// mask-image: src('../assets/schedule-close-mask-bottom.html');
 			}
+		}
+
+		.swipe-down-icon{
+			position:absolute;
+			left: 365px;
+			top:982px;
 		}
 
 		.day-header{

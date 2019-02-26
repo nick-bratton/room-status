@@ -7,7 +7,7 @@
 				<ScheduleSlot class="div-slot" :entry="entry"></ScheduleSlot>
 			</div>
 		</div>
-		<div class="swipe-down-icon" v-if="contentOverflowsViewport">
+		<div class="swipe-down-icon" v-if="contentOverflowsViewport == true && bottomOfContenInViewport != true">
 			<svg width="28px" height="20px" viewBox="0 0 28 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 				<g id="Iteration-4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.85">
 				<g id="Soon-Busy-Close" transform="translate(-365.000000, -982.000000)" fill="#FFFFFF">
@@ -33,6 +33,7 @@
 
 		const refreshEveryMilliSeconds = 60000
 		const fadeOutThresholdTop = 110
+		const fadeOutThresholdBottom = 985
 
 		export default {
 			props: {
@@ -44,6 +45,7 @@
 					roomName: null,
 					updateInterval: null,
 					contentOverflowsViewport: false,
+					bottomOfContenInViewport: false
 				}
 			},
 			components: {
@@ -111,13 +113,21 @@
 				handleScroll(event){
 					for (let i = 0; i < event.path[0].children[0].children.length; i++){
 						let c = event.path[0].children[0].children[i];
-						if(c.getBoundingClientRect().top < fadeOutThresholdTop){
+						if(c.getBoundingClientRect().top < fadeOutThresholdTop || c.getBoundingClientRect().bottom >= fadeOutThresholdBottom){
 							c.classList.add('transparent');
 							c.classList.remove('opaque');
 						}
 						else {
 							c.classList.remove('transparent');
 							c.classList.add('opaque');
+						}
+						if (i == event.path[0].children[0].children.length-1){
+							if (c.classList.contains('opaque')){
+								this.bottomOfContenInViewport = true;
+							}
+							else{
+								this.bottomOfContenInViewport = false;
+							}
 						}
 					}
 				},
@@ -126,10 +136,8 @@
 				if (this.$route.params.user) {await this.refreshRoomName()}
 				this.updateInterval = setInterval(this.refreshCalendar, refreshEveryMilliSeconds)
 				if (this.$refs.wrapper.getBoundingClientRect().height > 840){
-					console.log('entries overflow the viewport...show the down arrow')
 					this.contentOverflowsViewport = true;
 				}
-
 			},
 			beforeDestroy() {
 				clearInterval(this.updateInterval)

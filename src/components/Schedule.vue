@@ -2,7 +2,7 @@
 	<div class="app" :class="modeClass" v-on:click="toggleDistanceMode">
 		<div class="background" :class="roomStatus"></div>
 		<schedule-far :entries="entries"></schedule-far>
-		<schedule-close :entries="entries" :roomStatus="roomStatus"></schedule-close>
+		<schedule-close :entries="entries" :roomStatus="getRoomStatus()"></schedule-close>
 	</div>
 </template>
 
@@ -62,19 +62,19 @@
 			getRoomStatus(){
 				if (this.currentEntry && (this.timeRemaining / 60000) > 30 ) {
 					this.roomStatus = 'occupied';
-					// return 'occupied'
+					return 'occupied'
 				}
 				else if (this.currentEntry && (this.timeRemaining / 60000) <= 30) {
 					this.roomStatus = "free-soon";
-					// return 'free-soon'
+					return 'free-soon'
 				}
 				else {
 					if (this.nextEntry && getProgressUntilNextEntry(this.nextEntry) >= 0.5) {
 						this.roomStatus = "occupied-soon";
-						// return 'occupied-soon'
+						return 'occupied-soon'
 					} else {
 						this.roomStatus = "free";
-						// return 'free'
+						return 'free'
 					}
 				}
 			}

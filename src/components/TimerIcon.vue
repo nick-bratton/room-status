@@ -120,10 +120,8 @@
 			},
 			showRoomStatusProgress: function(){
 				let vm = this;
-				let scaleFactor;
-				if (this.roomStatus == 'free-soon'){scaleFactor = (10/3);}
-				else {scaleFactor = 1;}
-				vm.arcLength = 100 - ((vm.timeRemaining / 60000) * scaleFactor);
+				let scaleFactor = 1;
+				vm.arcLength = getProgressUntilEntryEnd(getCurrentEntry(this.entries)) * 100;
 				vm.context.clearRect(0, 0, vm.canvas.width, vm.canvas.height);
 				vm.context.strokeStyle = vm.completionColor;
 				for (let i = 0; i < 103; i++){

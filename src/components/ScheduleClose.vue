@@ -1,10 +1,10 @@
 <template>
 	<div class="schedule-close" v-if="entries" v-on:scroll="handleScroll">
 		<div class="content-wrapper" ref="wrapper"> 
-			<div class="day-header">Today</div>
-			<div v-for="(entry, entryIndex) in shownEntries" v-bind:key="entryIndex">
-				<div class="day-indicator" v-if="isDifferentDay(entryIndex)">{{ entry.start | niceDay }}</div>
-				<ScheduleSlot class="div-slot" :entry="entry"></ScheduleSlot>
+			<div class="day-header scroll">Today</div>
+			<div class="temp-wrapper" v-for="(entry, entryIndex) in shownEntries" v-bind:key="entryIndex">
+				<div class="day-indicator scroll" v-if="isDifferentDay(entryIndex)">{{ entry.start | niceDay }}</div>
+				<ScheduleSlot class="div-slot scroll" :entry="entry"></ScheduleSlot>
 			</div>
 		</div>
 		<div class="swipe-down-icon" v-if="contentOverflowsViewport == true && bottomOfContenInViewport != true">
@@ -111,8 +111,8 @@
 					}
 				},
 				handleScroll(event){
-					for (let i = 0; i < event.path[0].children[0].children.length; i++){
-						let c = event.path[0].children[0].children[i];
+					for (let i = 0; i < document.getElementsByClassName('scroll').length; i++){
+						let c = document.getElementsByClassName('scroll')[i];
 						if(c.getBoundingClientRect().top < fadeOutThresholdTop || c.getBoundingClientRect().bottom >= fadeOutThresholdBottom){
 							c.classList.add('transparent');
 							c.classList.remove('opaque');

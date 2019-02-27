@@ -58,6 +58,7 @@
 				<div class="entry-attendee" v-for="(attendee, attendeeIndex) in attendees" v-if="attendee.isOrganizer" v-bind:key="attendeeIndex">{{attendee.name}}</div>
 				<div class="entry-time">{{entry.start | hhmm}} — {{entry.end | hhmm}}</div>
 			</div>
+			<div class ="entry-data-additional-attendees" v-if="this.entry.attendees.length > 1"> + {{this.entry.attendees.length}} more</div>
 		</div> 
 		<!-- THESE SLOTS ARE FOR TIME PERIODS THAT ARE FREE -->
 		<div v-else class="slot-content-free">
@@ -183,6 +184,14 @@
 	.entry-data-wrapper{
 		margin-left:30px;
 		margin-top: 16px;
+	}
+
+	.entry-data-additional-attendees{
+		font-size:32px;
+		font-weight:bold;
+		color: rgb(134,141,146);
+		margin-top: 16px;
+		margin-left: auto;
 	}
 
 </style>

@@ -1,0 +1,26 @@
+docker_builder:
+  only_if: $CIRRUS_BRANCH == 'master'
+  depends_on: 
+    - test
+    - lint
+  env:
+    DOCKER_USERNAME: _
+    HEROKU_TOKEN: ENCRYPTED[42c2cdc2b72ec63288fc99ab83d112e9e6fe33ec34674f97c52bd15d0db9d514fe05ed26dc03712f3f20189486572171]
+    TAG: registry.heroku.com/blockpy-staging/web
+  build_script: docker build --tag $TAG .
+  login_script: docker login --username $DOCKER_USERNAME --password $HEROKU_TOKEN registry.heroku.com
+  push_script: docker push $TAG
+  release_script: |
+    curl -n -X PATCH https://api.heroku.com/apps/blockpy-staging/formation \
+      -d "{
+        \"updates\": [
+          {
+            \"type\": \"web\",
+            \"docker_image\": \"$(docker inspect $TAG --format={{.Id}})\"
+          }
+        ]
+      }" \
+      -H "Content-Type: application/json" \
+      -H "Accept: application/vnd.heroku+json; version=3.docker-releases" \
+      -H "Authorization: Bearer ${HEROKU_TOKEN}"
+    

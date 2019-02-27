@@ -1,7 +1,10 @@
 <template>
 	<div class="top-bar">
-		<div class="room-name" v-if="roomName">
-			{{ roomName | niceRoomName }}
+		<div class="room-name-wrapper">
+			<div class="room-name" v-if="roomName">
+				{{ roomName | niceRoomName }}
+			</div>
+			<img id="burger" src="../assets/burger-menu-icon.svg" width="37" height="31"> 
 		</div>
 		<div class="current-time" v-if="currentTime">
 			{{ currentTime | niceTime }}
@@ -10,8 +13,10 @@
 </template>
 
 <script>
-	const refreshTimeEveryMilliSeconds = 1000
+	import TimerIcon from './TimerIcon.vue'
 	import leftPad from 'left-pad'
+
+	const refreshTimeEveryMilliSeconds = 1000
 
 	export default {
 		props: ['roomName'],
@@ -21,6 +26,9 @@
 				updateTimeInterval: null
 			}
 		},
+		components: {
+			TimerIcon
+		},
 		async mounted() {
 			this.updateTimeInterval = setInterval(this.refreshTime, refreshTimeEveryMilliSeconds)
 		},
@@ -29,14 +37,22 @@
 		},
 		filters: {
 			niceRoomName(rawRoomName) {
+				let maxCharsInRoomName = 5;
 				if (!rawRoomName) return rawRoomName
 				else 
 					rawRoomName = rawRoomName.replace(/^room(-|–)(ber|muc)(-|–)/i, "")
-					// remove the (x ppl)
 					//
+					// remove the (x ppl)...
 					if (rawRoomName.indexOf('(') != -1){
-						rawRoomName = rawRoomName.slice(0,rawRoomName.indexOf('('))
+						rawRoomName = rawRoomName.slice(0,rawRoomName.indexOf('(')-1)
 					}
+					//
+					// trim the string if it's too long...
+					if (rawRoomName.length >= maxCharsInRoomName){
+						rawRoomName = rawRoomName.slice(0,maxCharsInRoomName);
+						rawRoomName += '...';
+					}
+
 				return rawRoomName
 			},
 			niceTime(date) {
@@ -59,7 +75,7 @@
 		top:0px;
 		display: flex;
 		align-items: center;
-		padding: 60px 30px;
+		// padding: 60px 30px;
 		height: 128px;
 		width: 100%;
 		font-size: 60px;
@@ -79,15 +95,31 @@
 
 		.current-time {
 			text-align: right;
+			margin-right:64px;
+			padding-top:8px;
+		}
+
+		.room-name-wrapper{
+			display:flex;
+			align-items: center;
+			background-color:rgba(255,255,255,0.2);
+			border-radius: 41px;
+			width: 350px;
+			height:82px;
+			margin-left:37px;
+			justify-content: space-between;
+			flex-shrink: 0;
 		}
 
 		.room-name{
-			background-color:rgba(255,255,255,0.2);
-			border-radius: 41px;
-			padding-left: 48px;
-			padding-right:48px;
+			padding-left: 38px;	// 48px in sebastian's designs
 			padding-top:11px;
-			height:82px;
+		}
+
+		#burger{
+			margin-right: 31px;	// 41px in sebastian's designs
+			width: 37px;
+			height: 31px;
 		}
 	}
 

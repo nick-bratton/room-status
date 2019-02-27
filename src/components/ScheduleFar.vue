@@ -1,40 +1,20 @@
 <template>
 	<div class="schedule-far" v-if="entries" :class="roomStatusClass">
-		<div class="bg-current"></div>
+		<!-- <div class="bg-current"></div> -->
 		<div class="room-status-info">
 			<div >
 				<div class="room-status-soon" v-if="roomStatusClass != 'free' && roomStatusClass != 'occupied'">Soon</div>
 				<div v-else class="room-status-not-soon"> &nbsp</div>
-
 				<div class="room-status-intro-text">
 					{{ roomStatusText }}
 				</div>
-
 				<div v-if="roomStatusClass == 'free'" id="free-icon">
-					<svg width="201px" height="201px" viewBox="0 0 201 201" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-							<defs>
-									<path d="M180.5,378 C129.563877,378 88,336.436123 88,285.5 C88,234.563877 129.563877,193 180.5,193 C231.436123,193 273,234.563877 273,285.5 C273,336.436123 231.436123,378 180.5,378 Z M226.001035,251.164282 C222.933063,248.10855 218.22884,248.10855 215.160868,251.164282 L166.277854,301.889437 L144.597521,279.277019 C141.529549,276.221287 136.825326,276.221287 133.757355,279.277019 C130.689383,282.332751 130.689383,287.425638 133.757355,290.48137 L160.960036,318.594107 C164.028008,321.649839 168.732231,321.649839 171.800203,318.594107 L226.001035,262.368634 C229.069006,259.312902 229.069006,254.220015 226.001035,251.164282 Z" id="path-1"></path>
-									<filter x="-5.9%" y="-5.9%" width="114.1%" height="114.1%" filterUnits="objectBoundingBox" id="filter-2">
-											<feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
-											<feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-											<feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
-									</filter>
-							</defs>
-							<g id="Iteration-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-									<g id="Free-Until-Far" transform="translate(-286.000000, -457.000000)" fill-rule="nonzero">
-											<g id="Main-Info" transform="translate(204.000000, 270.000000)">
-													<g id="Shape-Copy">
-															<use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-															<use fill="#FFFFFF" xlink:href="#path-1"></use>
-													</g>
-											</g>
-									</g>
-							</g>
-					</svg>
+					<img src="../assets/free-icon.svg" height="201" width="201"> 
 				</div>
-
-				<timer-icon :entries="entries" :timeRemaining="timeRemaining"></timer-icon>
-
+				<div v-else-if="roomStatusClass == 'occupied-soon'">
+					<img src="../assets/soon-icon.svg" height="185" width="185"> 
+				</div>
+				<timer-icon :entries="entries" :timeRemaining="timeRemaining" v-if="roomStatus == 'free-soon' || roomStatus == 'occupied'"></timer-icon>
 				<div class="room-status-time">
 					<div v-if="roomStatusClass == 'free-soon' || roomStatusClass == 'occupied-soon'">In&nbsp</div>
 					<div v-else-if="(roomStatusClass == 'occupied' || roomStatusClass == 'free') && roomStatusTimeAmount != Infinity">For&nbsp</div>

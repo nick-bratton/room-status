@@ -1,18 +1,10 @@
 <template>
-<<<<<<< HEAD
-  <div class="app" :class="modeClass" v-on:click="toggleDistanceMode">
-  <!-- <div class="app" :class="modeClass" > -->
-    <schedule-far :entries="entries"></schedule-far>
-    <schedule-close :entries="entries"></schedule-close>
-  </div>
-=======
 	<div class="app" :class="modeClass" v-on:click="toggleDistanceMode">
 		<div class="background" :class="roomStatus"></div>
 		<schedule-far :entries="entries"></schedule-far>
 		<schedule-close :entries="entries" :roomStatus="getRoomStatus()"></schedule-close>
 		<!-- <available-slots-modal></available-slots-modal> -->
 	</div>
->>>>>>> far-view-UI-update
 </template>
 
 <script>

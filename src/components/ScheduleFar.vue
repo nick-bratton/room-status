@@ -1,10 +1,6 @@
 <template>
 	<div class="schedule-far" v-if="entries" :class="roomStatusClass">
-<<<<<<< HEAD
-		<div class="bg-current"></div>
-=======
 		<!-- <div class="bg-current"></div> -->
->>>>>>> far-view-UI-update
 		<div class="room-status-info">
 			<div >
 				<div class="room-status-soon" v-if="roomStatusClass != 'free' && roomStatusClass != 'occupied'">Soon</div>
@@ -36,10 +32,6 @@
 							</g>
 					</svg>
 				</div>
-<<<<<<< HEAD
-
-				<timer-icon :entries="entries" :timeRemaining="timeRemaining"></timer-icon>
-=======
 				<div v-else-if="roomStatusClass == 'occupied-soon'">
 					<svg width="185px" height="185px" viewBox="0 0 185 185" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 						<g id="Iteration-4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -56,7 +48,6 @@
 				</div>
 
 				<timer-icon :entries="entries" :timeRemaining="timeRemaining" v-if="roomStatus == 'free-soon' || roomStatus == 'occupied'"></timer-icon>
->>>>>>> far-view-UI-update
 
 				<div class="room-status-time">
 					<div v-if="roomStatusClass == 'free-soon' || roomStatusClass == 'occupied-soon'">In&nbsp</div>

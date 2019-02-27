@@ -23,18 +23,22 @@ export async function getSession() {
     return session
 }
 
-export function getToken(session) {
+export function isOnline(session) {
+    const currentTime = (new Date()).getTime() / 1000;
+    return session && session.access_token && session.expires > currentTime;
+}
+
+export async function getToken(session) {
     return session.access_token;
 }
 
-export async function login() {
-    const promise = await hello.login("activeDirectoryTenant", {
-        display: "page",
+export async function login(refresh=false) {
+    return hello.login("activeDirectoryTenant", {
+        display: refresh ? "none" : "page",
         scope: encodeURIComponent([
             `https://graph.microsoft.com/Calendars.Read.Shared`,
             `https://graph.microsoft.com/User.ReadBasic.All`
         ].join(' ')),
         force: false
     })
-    return promise
 }

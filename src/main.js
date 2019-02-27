@@ -8,6 +8,12 @@ const router = new VueRouter({
   routes:[
     {path: '/calendar/:user', component: Calendar},
     {path: '/', component: SelectRoom},
+    
+    //Default route, in case of bad hash route
+    {
+      path: '/:garbage', 
+      redirect: `/calendar/${localStorage.getItem('default_room')}`
+    },
   ]
 })
 

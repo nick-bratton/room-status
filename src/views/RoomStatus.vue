@@ -32,6 +32,10 @@
             if (this.$route.params.user) {
                 await this.refreshCalendar()
                 await this.refreshRoomName()
+                localStorage.setItem(
+                    'default_room',
+                    this.$route.params.user
+                )
             }
             this.updateInterval = setInterval(this.refreshCalendar, refreshEveryMilliSeconds)
         },
@@ -45,7 +49,6 @@
             }
         },
         methods: {
-
             async refreshCalendar() {
                 const rawEntries = await getCalendarEntries(this.$route.params.user)
                 if (!rawEntries || rawEntries.error) {

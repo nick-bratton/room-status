@@ -1,202 +1,175 @@
 <template>
-    <div class="schedule-slot" :class="{free: entry.type === 'free'}">
-        <div class="bg-progress" :style="bgProgressStyle"></div>
-        <div class="row time start-end">{{entry.start | hhmm}} — {{entry.end | hhmm}}</div>
-        <div class="row flex">
-            <div class="time total">
-                {{totalTime | niceDistance}}
-            </div>
-            <div class="middle-block time">
-                <div v-if="entry.type === 'free'" class="free">
-                    Free
-                </div>
-                <div class="attendees" v-else>
-                    <div class="attendee" v-for="(attendee, attendeeIndex) in attendees"
-                         v-bind:key="attendeeIndex" :class="{organizer: attendee.isOrganizer}">
-                        {{attendee.name}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="schedule-slot" :class="{free: entry.type === 'free'}">
+		<!-- THESE SLOTS ARE FOR TIME PERIODS THAT HAVE BEEN BOOKED -->
+		<div v-if="entry.type !== 'free'" class="slot-content-booked">
+			<div class="user-icon">
+					<!--<svg v-if="roomStatus == 'free'" width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+						<g id="Iteration-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+								<g id="Busy-Far" transform="translate(-176.000000, -826.000000)">
+										<g id="Current-Meeting" transform="translate(135.000000, 804.000000)">
+												<g id="User-Icon" transform="translate(43.000000, 23.000000)">
+														<path d="M96.1098664,48.9451121 C96.1098664,75.4850374 74.5949037,97 48.0549785,97 C21.5150533,97 9.06542056e-05,75.4850374 9.06542056e-05,48.9451121 C9.06542056e-05,22.4051869 21.5150533,0.890224299 48.0549785,0.890224299 C74.5949037,0.890224299 96.1098664,22.4051869 96.1098664,48.9451121" id="Fill-1" stroke="#FFFFFF" stroke-width="3" fill="#94679F"></path>
+														<path d="M85.3175381,79.2790194 C84.2453952,77.7218581 82.9805381,76.3390194 81.3519667,75.3183742 C80.1513476,74.5650839 78.8738238,73.9183742 77.5854429,73.3231484 C72.8083,71.1120516 67.997681,68.9732129 63.2313952,66.7413419 C61.582919,65.9699871 60.0240143,65.0062452 58.3854905,64.1093419 C60.6654905,61.5378581 62.0968238,58.6348903 62.9210619,55.4157935 C62.9644905,55.2486968 63.0947762,55.0978581 63.2060619,54.9542452 C63.9362048,54.0031484 64.748681,53.1044387 65.3937762,52.0982452 C67.3996333,48.969471 68.4817286,45.5805677 68.1080619,41.8086968 C67.9443,40.1476645 67.579681,39.5416 66.3293,39.1586323 C66.3166333,39.0385032 66.2931095,38.9111484 66.2913,38.7837935 C66.2623476,36.5284387 66.2831571,34.2712774 66.1935857,32.0186323 C66.1320619,30.4741161 66.0768714,28.8997935 65.7412048,27.4013419 C64.7242524,22.8716645 62.3583,19.2488258 58.1773952,16.981729 C55.7843,15.6837935 53.2057286,15.0199226 50.4995857,14.8139871 C47.1121571,14.5547613 43.7672524,14.7507613 40.5173476,15.8111484 C33.9641571,17.9517935 30.3215857,23.5283097 29.890919,30.0875355 C29.7235381,32.6481806 29.7796333,35.2232774 29.7371095,37.7920516 C29.7298714,38.2671484 29.7362048,38.7413419 29.7362048,39.2336 C28.6921095,39.2769548 28.2777286,39.9263742 28.1067286,40.7618581 C27.7276333,42.613471 27.7484429,44.477729 28.1528714,46.3185032 C28.8603952,49.5312774 30.4220143,52.3032774 32.6187762,54.7401806 C32.8766333,55.0265032 33.0512524,55.4058581 33.1987286,55.7689548 C33.804919,57.2692129 34.2790143,58.8345032 35.0082524,60.2715355 C35.6868238,61.6110194 36.6259667,62.8186323 37.5234905,64.1951484 C35.8352048,65.1074065 34.1161571,66.1244387 32.3211095,66.9834065 C29.1906333,68.4818581 26.0131095,69.8836645 22.8545857,71.3234065 C21.0224429,72.1588903 19.2047762,73.0259871 17.3527286,73.8126968 C14.5380143,75.0076645 12.3973476,76.913471 10.6991095,79.3043097 C19.4915857,90.1538581 32.9300143,97.0969548 47.997919,97.0969548 C63.0784905,97.0969548 76.5250619,90.1430194 85.3175381,79.2790194" id="Fill-4" fill="#F4F6F7"></path>
+												</g>
+										</g>
+								</g>
+						</g>
+					</svg>-->
+					<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+						<g id="Iteration-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+								<g id="Soon-Busy-Far" transform="translate(-176.000000, -826.000000)">
+										<g id="Current-Meeting" transform="translate(135.000000, 804.000000)">
+												<g id="User-Icon" transform="translate(43.000000, 23.000000)">
+														<path d="M96.1098664,48.9451121 C96.1098664,75.4850374 74.5949037,97 48.0549785,97 C21.5150533,97 9.06542056e-05,75.4850374 9.06542056e-05,48.9451121 C9.06542056e-05,22.4051869 21.5150533,0.890224299 48.0549785,0.890224299 C74.5949037,0.890224299 96.1098664,22.4051869 96.1098664,48.9451121" id="Fill-1" stroke="#FFFFFF" stroke-width="3" fill="#F5812E"></path>
+														<path d="M85.3175381,79.2790194 C84.2453952,77.7218581 82.9805381,76.3390194 81.3519667,75.3183742 C80.1513476,74.5650839 78.8738238,73.9183742 77.5854429,73.3231484 C72.8083,71.1120516 67.997681,68.9732129 63.2313952,66.7413419 C61.582919,65.9699871 60.0240143,65.0062452 58.3854905,64.1093419 C60.6654905,61.5378581 62.0968238,58.6348903 62.9210619,55.4157935 C62.9644905,55.2486968 63.0947762,55.0978581 63.2060619,54.9542452 C63.9362048,54.0031484 64.748681,53.1044387 65.3937762,52.0982452 C67.3996333,48.969471 68.4817286,45.5805677 68.1080619,41.8086968 C67.9443,40.1476645 67.579681,39.5416 66.3293,39.1586323 C66.3166333,39.0385032 66.2931095,38.9111484 66.2913,38.7837935 C66.2623476,36.5284387 66.2831571,34.2712774 66.1935857,32.0186323 C66.1320619,30.4741161 66.0768714,28.8997935 65.7412048,27.4013419 C64.7242524,22.8716645 62.3583,19.2488258 58.1773952,16.981729 C55.7843,15.6837935 53.2057286,15.0199226 50.4995857,14.8139871 C47.1121571,14.5547613 43.7672524,14.7507613 40.5173476,15.8111484 C33.9641571,17.9517935 30.3215857,23.5283097 29.890919,30.0875355 C29.7235381,32.6481806 29.7796333,35.2232774 29.7371095,37.7920516 C29.7298714,38.2671484 29.7362048,38.7413419 29.7362048,39.2336 C28.6921095,39.2769548 28.2777286,39.9263742 28.1067286,40.7618581 C27.7276333,42.613471 27.7484429,44.477729 28.1528714,46.3185032 C28.8603952,49.5312774 30.4220143,52.3032774 32.6187762,54.7401806 C32.8766333,55.0265032 33.0512524,55.4058581 33.1987286,55.7689548 C33.804919,57.2692129 34.2790143,58.8345032 35.0082524,60.2715355 C35.6868238,61.6110194 36.6259667,62.8186323 37.5234905,64.1951484 C35.8352048,65.1074065 34.1161571,66.1244387 32.3211095,66.9834065 C29.1906333,68.4818581 26.0131095,69.8836645 22.8545857,71.3234065 C21.0224429,72.1588903 19.2047762,73.0259871 17.3527286,73.8126968 C14.5380143,75.0076645 12.3973476,76.913471 10.6991095,79.3043097 C19.4915857,90.1538581 32.9300143,97.0969548 47.997919,97.0969548 C63.0784905,97.0969548 76.5250619,90.1430194 85.3175381,79.2790194" id="Fill-4" fill="#F4F6F7"></path>
+												</g>
+										</g>
+								</g>
+						</g>
+					</svg>
+					<!-- <svg v-else-if="roomStatus == 'free-soon'" width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+						<g id="Iteration-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+								<g id="Soon-Free-Far" transform="translate(-176.000000, -826.000000)">
+										<g id="Current-Meeting" transform="translate(135.000000, 804.000000)">
+												<g id="User-Icon" transform="translate(43.000000, 23.000000)">
+														<path d="M96.1098664,48.9451121 C96.1098664,75.4850374 74.5949037,97 48.0549785,97 C21.5150533,97 9.06542056e-05,75.4850374 9.06542056e-05,48.9451121 C9.06542056e-05,22.4051869 21.5150533,0.890224299 48.0549785,0.890224299 C74.5949037,0.890224299 96.1098664,22.4051869 96.1098664,48.9451121" id="Fill-1" stroke="#FFFFFF" stroke-width="3" fill="#F5812E"></path>
+														<path d="M85.3175381,79.2790194 C84.2453952,77.7218581 82.9805381,76.3390194 81.3519667,75.3183742 C80.1513476,74.5650839 78.8738238,73.9183742 77.5854429,73.3231484 C72.8083,71.1120516 67.997681,68.9732129 63.2313952,66.7413419 C61.582919,65.9699871 60.0240143,65.0062452 58.3854905,64.1093419 C60.6654905,61.5378581 62.0968238,58.6348903 62.9210619,55.4157935 C62.9644905,55.2486968 63.0947762,55.0978581 63.2060619,54.9542452 C63.9362048,54.0031484 64.748681,53.1044387 65.3937762,52.0982452 C67.3996333,48.969471 68.4817286,45.5805677 68.1080619,41.8086968 C67.9443,40.1476645 67.579681,39.5416 66.3293,39.1586323 C66.3166333,39.0385032 66.2931095,38.9111484 66.2913,38.7837935 C66.2623476,36.5284387 66.2831571,34.2712774 66.1935857,32.0186323 C66.1320619,30.4741161 66.0768714,28.8997935 65.7412048,27.4013419 C64.7242524,22.8716645 62.3583,19.2488258 58.1773952,16.981729 C55.7843,15.6837935 53.2057286,15.0199226 50.4995857,14.8139871 C47.1121571,14.5547613 43.7672524,14.7507613 40.5173476,15.8111484 C33.9641571,17.9517935 30.3215857,23.5283097 29.890919,30.0875355 C29.7235381,32.6481806 29.7796333,35.2232774 29.7371095,37.7920516 C29.7298714,38.2671484 29.7362048,38.7413419 29.7362048,39.2336 C28.6921095,39.2769548 28.2777286,39.9263742 28.1067286,40.7618581 C27.7276333,42.613471 27.7484429,44.477729 28.1528714,46.3185032 C28.8603952,49.5312774 30.4220143,52.3032774 32.6187762,54.7401806 C32.8766333,55.0265032 33.0512524,55.4058581 33.1987286,55.7689548 C33.804919,57.2692129 34.2790143,58.8345032 35.0082524,60.2715355 C35.6868238,61.6110194 36.6259667,62.8186323 37.5234905,64.1951484 C35.8352048,65.1074065 34.1161571,66.1244387 32.3211095,66.9834065 C29.1906333,68.4818581 26.0131095,69.8836645 22.8545857,71.3234065 C21.0224429,72.1588903 19.2047762,73.0259871 17.3527286,73.8126968 C14.5380143,75.0076645 12.3973476,76.913471 10.6991095,79.3043097 C19.4915857,90.1538581 32.9300143,97.0969548 47.997919,97.0969548 C63.0784905,97.0969548 76.5250619,90.1430194 85.3175381,79.2790194" id="Fill-4" fill="#F4F6F7"></path>
+												</g>
+										</g>
+								</g>
+						</g>
+					</svg> -->
+			</div>
+			<div class="entry-data-wrapper">
+				<div class="entry-attendee" v-for="(attendee, attendeeIndex) in attendees" v-if="attendee.isOrganizer" v-bind:key="attendeeIndex">{{attendee.name}}</div>
+				<div class="entry-time">{{entry.start | hhmm}} — {{entry.end | hhmm}}</div>
+			</div>
+		</div> 
+		<!-- THESE SLOTS ARE FOR TIME PERIODS THAT ARE FREE -->
+		<div v-else class="slot-content-free">
+			<div class="free-icon">FREE</div>
+			<div class="free-data">{{entry.start | hhmm}} — {{entry.end | hhmm}}</div>
+		</div>
+	</div>
 </template>
 
 <script>
-    import {format, distanceInWords, distanceInWordsStrict} from 'date-fns'
-    import {getProgressUntilEntryEnd} from '@/services/calendarService'
+	import {format, distanceInWords, distanceInWordsStrict} from 'date-fns'
+	import {getProgressUntilEntryEnd} from '@/services/calendarService'
 
-    export default {
-        props: ['entry'],
-        filters: {
-            hhmm(v) {
-                return format(new Date(v), "HH:mm")
-            },
-            relativeDate(v) {
-                const distance = distanceInWords(v, new Date());
-                return distance
-            },
-            niceDistance(timeStr) {
-                timeStr = timeStr.replace(' hours', 'h')
-                timeStr = timeStr.replace(' minutes', 'min')
-                timeStr = timeStr.replace(' seconds', 's')
-                timeStr = timeStr.replace(' hour', 'h')
-                timeStr = timeStr.replace(' minute', 'min')
-                timeStr = timeStr.replace(' second', 's')
-                return timeStr
-            }
-        },
-        computed: {
-            attendees() {
-                return this.entry.attendees.map(attendee => {
-                    const isOrganizer = this.isOrganizer(attendee)
-                    return {
-                        name: attendee,
-                        isOrganizer
-                    }
-                }).sort((a,b) => {
-                    if(a.isOrganizer && !(b.isOrganizer)) {
-                        return -1
-                    }
-                    if(!(a.isOrganizer) && b.isOrganizer) {
-                        return 1
-                    }
-                    return 0
-                })
-            },
-            bgProgressStyle() {
-                const progress = getProgressUntilEntryEnd(this.entry)
-                return 'transform: scaleX(' + progress + ')'
-            },
-            totalTime() {
-                return distanceInWordsStrict(this.entry.end, this.entry.start)
-            }
-        },
-        methods: {
-            isOrganizer(attendeeName) {
-                return this.entry.organizer && this.entry.organizer.emailAddress && this.entry.organizer.emailAddress.name === attendeeName
-            }
-        }
-    }
+	export default {
+		props: ['entry'],
+		filters: {
+			hhmm(v) {
+				return format(new Date(v), "HH:mm")
+			},
+			relativeDate(v) {
+				const distance = distanceInWords(v, new Date());
+				return distance
+			},
+			niceDistance(timeStr) {
+				timeStr = timeStr.replace(' hours', 'h')
+				timeStr = timeStr.replace(' minutes', 'min')
+				timeStr = timeStr.replace(' seconds', 's')
+				timeStr = timeStr.replace(' hour', 'h')
+				timeStr = timeStr.replace(' minute', 'min')
+				timeStr = timeStr.replace(' second', 's')
+				return timeStr
+			}
+		},
+		computed: {
+			attendees() {
+				return this.entry.attendees.map(attendee => {
+					const isOrganizer = this.isOrganizer(attendee)
+					return {
+						name: attendee,
+						isOrganizer
+					}
+				}).sort((a,b) => {
+					if(a.isOrganizer && !(b.isOrganizer)) {
+						return -1
+					}
+					if(!(a.isOrganizer) && b.isOrganizer) {
+						return 1
+					}
+					return 0
+				})
+			},
+			totalTime() {
+				return distanceInWordsStrict(this.entry.end, this.entry.start)
+			}
+		},
+		methods: {
+			isOrganizer(attendeeName) {
+				return this.entry.organizer && this.entry.organizer.emailAddress && this.entry.organizer.emailAddress.name === attendeeName
+			}
+		}
+	}
 </script>
 
 <style lang="scss" scoped>
-    @import 'colors';
+	@import 'colors';
 
-    .schedule-slot {
-        background-color: $color-occupied;
-        clear: both;
-        color: white;
-        width: 100%;
-        min-height: 160px;
-        padding: 20px 30px;
-        border-top: 1px solid white;
-        border-bottom: 1px solid white;
-        position: relative;
-        &.free {
-            background-color: $color-free;
-        }
+	.schedule-slot {
+		background-color: rgba(253, 242, 233, 0.9);
+		clear: both;
+		color: white;
+		width: 615px;
+		height: 143px;
+		padding: 20px 30px;
+		margin: 0 auto;
+		margin-bottom:22px;
+		position: relative;
+		border-radius: 10px;
+		&.free {
+			height:92px;
+			background-color:rgba(255,255,255,0.5);
+		}
+	}
 
-        .bg-progress {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.2);
-            transform-origin: left;
-        }
-    }
+	.slot-content-booked,
+	.slot-content-free{
+		display:flex;
+		height:100%;
+		width:100%;
+	}
 
-    .time-block {
-        display: inline-block;
-        width: 40%;
-        float: left;
-    }
+	.free-icon{
+		font-size: 28px;
+		font-weight: bold;
+		background-color: rgb(55,163,105);
+		border-radius: 4px;
+		width:95px;
+		height:38px;
+		text-align: center;
+		padding-top:3.5px;
+		align-self:center;
+	}
 
-    .middle-block {
-        margin-left: 2em;
-    }
+	.free-data{
+		font-size: 34px;
+		font-weight: bold;
+		color:rgb(89,89,89);
+		align-self:center;
+		padding-left: 32px;
+		padding-top:4px;
+	}
+	.entry-time{
+		font-size: 28px;
+		font-weight:bold;
+		color: rgb(78,84,91);
+	}
 
-    .schedule-slot.highlight {
-        background-color: black;
-    }
+	.entry-attendee{
+		font-size:32px;
+		font-weight:bold;
+		color: rgb(48,59,69);
+	}
 
-    .attendee {
-        display: inline-block;
-        font-weight: 100;
-        margin-right: 1em;
-        &.organizer {
-            font-weight: bold;
-        }
-    }
-
-    .schedule-slot.schedule-slot.highlight > .time-block > * {
-        color: white;
-    }
-
-    .schedule-slot.highlight > .middle-block > * {
-        color: white;
-    }
-
-    .schedule-slot.highlight > .middle-block > * > * {
-        color: rgba(255, 255, 255, 0.8);
-    }
-
-    .schedule-slot > .middle-block > div.title {
-        display: none;
-    }
-
-    .schedule-slot.highlight > .middle-block > div.title {
-        display: block;
-    }
-
-    .attendee-counter {
-        float: right;
-        display: inline-block;
-        box-sizing: border-box;
-
-        /* background-color: red; */
-
-        width: 10%;
-        height: 2em;
-        overflow: hidden;
-    }
-
-    .title {
-        font-weight: 900;
-        text-align: left;
-    }
-
-    .time-relative {
-        margin-bottom: 20px;
-    }
-
-    .time.start-end {
-        font-size: 40px;
-    }
-
-    .time .free {
-        font-size: 60px;
-    }
-
-    .row {
-        position: relative;
-    }
-
-    .row.flex {
-        display: flex;
-        flex-direction: row;
-        align-items: baseline;
-        .time.total {
-            font-size: 60px;
-            white-space: nowrap;
-        }
-        .attendees {
-            font-size: 30px;
-        }
-    }
+	.entry-data-wrapper{
+		margin-left:30px;
+		margin-top: 16px;
+	}
 
 </style>
 

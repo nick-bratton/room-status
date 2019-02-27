@@ -1,54 +1,77 @@
-import {getSession, getToken, login} from "./authService";
+import {
+    getSession, 
+    getToken, 
+    login
+} from "./authService";
 import 'whatwg-fetch'
 
-class Client {
-    constructor() {
-        this.baseUrl = "https://graph.microsoft.com/v1.0/"
-        this.token = undefined
-        this.session = undefined
-    }
-    api(request, params = {}) {
-        const paramKeys = Object.keys(params)
-        const searchQuery = paramKeys.length ?
-            `?` + paramKeys.map(
-            param => `${param}=${params[param]}`
-            ).join(`&`)
-            : ''
-        const url = this.baseUrl + request + searchQuery
-        return {
-            get: async () => {
-                await this.connect()
-                const result = await fetch(url, {
-                    method: "GET",
-                    headers: new Headers({
-                        Authorization: `Bearer ${this.token}`
-                    }),
-                })
-                    .catch(e => {
-                        throw new Error(e)
-                    })
-                const json = await result.json()
-                if(!json) {
-                    throw new Error('Could not decode JSON')
-                }
-                if(json.error) {
-                    throw new Error(json.error.message)
-                }
-                return json.value ? json.value : json
-            }
+function appendParameter(params){
+    const paramKeys = Object.keys(params)
+    return paramKeys.map(
+        param => `${param}=${params[param]}`
+    ).join(`&`)
+}
+
+/**
+ * 
+ * @param {Client} client 
+ */
+function getJSONfromAPI(client, url){
+    return async ()=>{
+        await client.connect();
+        const requestOptions = {
+            method: "GET",
+            headers: new Headers({
+                Authorization: `Bearer ${client.token}`
+            }),
         }
+
+        const result = await fetch(url, requestOptions)
+            .catch(e => {
+                throw new Error(e)
+            })
+        
+        const json = await result.json()
+        if(!json) {
+            throw new Error('Could not decode JSON')
+        }
+
+        if(json.error) {
+            throw new Error(json.error.message)
+        }
+
+        return json.value ? json.value : json
+    }
+}
+
+class Client {
+    session = undefined;
+    baseUrl = "https://graph.microsoft.com/v1.0/"
+    token   = undefined;
+
+    constructor() {
+        login();
     }
 
-    get online() {
-        const currentTime = (new Date()).getTime() / 1000
-        return this.session && this.session.access_token && this.session.expires > currentTime
+    api(request, params = {}) {
+        const paramKeys = Object.keys(params)
+        const searchQuery = 
+            paramKeys.length 
+            ? `?` + appendParameter(params)
+            : ''
+        
+        const url = this.baseUrl + request + searchQuery
+        
+        return {
+            get: getJSONfromAPI(this, url)
+        }
     }
 
     async connect() {
         // Get a new token if the current one expired.
-        await login()
+        await login(true)
         this.session = await getSession();
-        this.token = getToken(this.session)
+        this.token   = await getToken(this.session); 
     }
 }
 

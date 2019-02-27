@@ -13,12 +13,11 @@ export async function getRooms(prefix = 'Room') {
         `users`, {
             "$filter": `startswith(displayName, '${prefix}')`
         }
-    )
-        .get()
-        .catch(e => {
-            console.warn(e)
-            return getFakeRooms()
-        })
+    ).get()
+    .catch(e => {
+        console.error(e)
+        return getFakeRooms()
+    })
 }
 
 function getFakeRooms() {

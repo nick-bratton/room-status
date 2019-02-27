@@ -1,5 +1,5 @@
 <template>
-	<div class="timer-icon" v-if="roomStatus == 'free-soon' || roomStatus == 'occupied-soon' || roomStatus == 'occupied'">
+	<div class="timer-icon">
 		<canvas ref="canvas" id="canvas" width="185" height="185"></canvas>
 		<div class="center-icon-wrapper" >
 			<svg id="busy-icon" v-if="roomStatus == 'occupied'" width="89px" height="22px" viewBox="0 0 89 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -34,8 +34,10 @@
 
 <script>
 
-import {getCurrentEntry, getProgressUntilEntryEnd, getProgressUntilNextEntry, getNextEntry, getNextFreeTime} from '@/services/calendarService'
-import TimerIcon from './TimerIcon'
+	import {getCurrentEntry, getProgressUntilEntryEnd, getProgressUntilNextEntry, getNextEntry, getNextFreeTime} from '@/services/calendarService'
+	import TimerIcon from './TimerIcon'
+
+	const refreshEveryMilliSeconds = 60000
 
 	export default {
 		data() { 
@@ -49,17 +51,10 @@ import TimerIcon from './TimerIcon'
 				twoPi: Math.PI * 2,
 				halfPi: Math.PI / 2,
 				completionColor: '#ffffff',
+				arcLength: 0
 			}
 		},
 		computed: {
-			remainingPercentageOfLastThirtyMinutes(){
-				completionAsInt = this.timeRemaining * (10/3);
-				console.log(completionAsInt);
-				return completionAsInt
-				// y = (10/3) * x 
-				// where x is the time remaining 
-				// and y is the percentage from 0 - 100
-			},
 			currentEntry() {
 				return getCurrentEntry(this.entries)
 			},
@@ -97,51 +92,47 @@ import TimerIcon from './TimerIcon'
 				}
 			}
 		},
-		mounted(){
+		async mounted(){
 			var vm = this;
-			vm.canvas = vm.$refs.canvas;
-			vm.context = vm.canvas.getContext("2d");
-			vm.x = canvas.width / 2;
-			vm.y = canvas.height / 2;
-			vm.context.lineWidth = 20;
-			vm.context.strokeStyle = vm.completionColor;
-			// 
-			// draw the outline of the background circle
-			for (let i = 0; i < 103; i++){
-				vm.context.beginPath();
-				vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * i) - vm.halfPi);
-				vm.context.stroke();
+			vm.drawBackground();
+			if (vm.roomStatus == 'free-soon' || vm.roomStatus == 'occupied'){ // waiting on design logic from sebastian for 'busy' case
+				vm.showRoomStatusProgress();
+				vm.updateInterval = setInterval(vm.showRoomStatusProgress, refreshEveryMilliSeconds);
 			}
 		},
+		beforeDestroy(){
+			clearInterval(this.updateInterval);
+		},
 		methods: {
-			animate: function(event){
-
-			// 	let vm = this;
-			// 	let i = 0;
-			// 	let draw = setInterval(function(){
-			// 		if (vm.completionAsInteger >= 101){
-			// 			clearInterval(draw);
-			// 		}
-			// 		else {
-			// 			vm.context.clearRect(0, 0, vm.canvas.width, vm.canvas.height);
-			// 			//
-			// 			// draw background
-			// 			vm.context.strokeStyle = vm.completionColor;
-			// 			for (let i = 0; i < 103; i++){
-			// 				vm.context.beginPath();
-			// 				vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * i) - vm.halfPi);
-			// 				vm.context.stroke();
-			// 			}
-			// 			//
-			// 			// draw foreground 
-			// 			vm.context.strokeStyle = '#ffffff';
-			// 			vm.context.beginPath();
-			// 			vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * vm.completionAsRatio) - vm.halfPi);
-			// 			vm.context.stroke();
-			// 			vm.completionAsInteger++;
-			// 			vm.completionAsRatio = vm.completionAsInteger/100;
-			// 		}
-			// 	},50);
+			drawBackground: function(){
+				var vm = this;
+				vm.canvas = vm.$refs.canvas;
+				vm.context = vm.canvas.getContext("2d");
+				vm.x = canvas.width / 2;
+				vm.y = canvas.height / 2;
+				vm.context.lineWidth = 20;
+				vm.context.strokeStyle = vm.completionColor;
+				for (let i = 0; i < 103; i++){
+					vm.context.beginPath();
+					vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * i) - vm.halfPi);
+					vm.context.stroke();
+				}
+			},
+			showRoomStatusProgress: function(){
+				let vm = this;
+				let scaleFactor = 1;
+				vm.arcLength = getProgressUntilEntryEnd(getCurrentEntry(this.entries)) * 100;
+				vm.context.clearRect(0, 0, vm.canvas.width, vm.canvas.height);
+				vm.context.strokeStyle = vm.completionColor;
+				for (let i = 0; i < 103; i++){
+					vm.context.beginPath();
+					vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * i) - vm.halfPi);
+					vm.context.stroke();
+				}
+				vm.context.strokeStyle = '#ffffff';
+				vm.context.beginPath();
+				vm.context.arc(vm.x, vm.y, vm.radius, -(vm.halfPi), ((vm.twoPi) * (vm.arcLength * 0.01)) - vm.halfPi);
+				vm.context.stroke();
 			},
 		},
 		props: {

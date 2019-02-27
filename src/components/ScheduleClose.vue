@@ -138,6 +138,7 @@
 				if (this.$refs.wrapper.getBoundingClientRect().height > 840){
 					this.contentOverflowsViewport = true;
 				}
+				// console.log(this.$parent.getRoomStatus())
 			},
 			beforeDestroy() {
 				clearInterval(this.updateInterval)

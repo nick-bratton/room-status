@@ -106,6 +106,7 @@
 		.current-time {
 			text-align: right;
 			margin-right:64px;
+			padding-top:8px;
 		}
 
 		.room-name-wrapper{

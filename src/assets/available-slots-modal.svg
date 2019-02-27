@@ -1,0 +1,28 @@
+<svg width="718px" height="882px" viewBox="0 0 718 882" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<defs>
+		<rect id="path-1" x="0" y="22" width="686" height="840" rx="20"></rect>
+		<filter x="-3.8%" y="-2.6%" width="107.6%" height="106.2%" filterUnits="objectBoundingBox" id="filter-2">
+			<feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+			<feGaussianBlur stdDeviation="8" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+			<feColorMatrix values="0 0 0 0 0.0352941176   0 0 0 0 0.109803922   0 0 0 0 0.180392157  0 0 0 0.3 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+		</filter>
+	</defs>
+		<g id="Iteration-4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+			<g id="Available-Slots" transform="translate(-33.000000, -92.000000)">
+				<g id="Popover" transform="translate(49.000000, 92.000000)">
+					<g id="Popover-Canvas">
+						<g id="Rectangle-3">
+							<use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+							<use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+						</g>
+						<path d="M20,21.9998021 L666.000231,21.9998021 C677.045926,21.9998021 686.000231,30.9541071 686.000231,41.9998021 C686.000231,65.0457858 686.000231,88.0917695 686.000231,111.137753 C686.000231,111.137753 1.70530257e-13,111.137753 1.70530257e-13,111.137753 C1.70530257e-13,88.0917695 1.70530257e-13,65.0457858 1.70530257e-13,41.9998021 L1.70530257e-13,41.9998021 C1.69177549e-13,30.9541071 8.954305,21.9998021 20,21.9998021 Z" id="Rectangle-3-Copy" fill="#37A369"></path>
+						<g id="Triangle" transform="translate(282.500000, 12.500000) scale(1, -1) translate(-282.500000, -12.500000) translate(264.000000, 0.000000)" fill="#37A369">
+							<polygon id="Triangle-Copy" stroke="#B1B1B1" transform="translate(18.500000, 13.800000) scale(1, -1) translate(-18.500000, -13.800000) " points="18.5 3 36 24.6 1 24.6"></polygon>
+							<polygon id="Triangle-Copy-2" transform="translate(18.500000, 11.800000) scale(1, -1) translate(-18.500000, -11.800000) " points="18.5 1 37 22.6 0 22.6"></polygon>
+							<rect id="Rectangle" x="0" y="0" width="37" height="3"></rect>
+						</g>
+					</g>
+				</g>
+			</g>
+	</g>
+</svg>

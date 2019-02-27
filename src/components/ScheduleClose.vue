@@ -93,7 +93,6 @@
 				},
 				async getRoomStatus(){
 					if (this.currentEntry && (this.timeRemaining / 60000) > 30 ) {
-						// this.roomStatus = 'occupied';
 						return 'occupied'
 					}
 					else if (this.currentEntry && (this.timeRemaining / 60000) <= 30) {
@@ -102,10 +101,8 @@
 					}
 					else {
 						if (this.nextEntry && getProgressUntilNextEntry(this.nextEntry) >= 0.5) {
-							// this.roomStatus = "occupied-soon";
 							return 'occupied-soon'
 						} else {
-							// this.roomStatus = "free";
 							return 'free'
 						}
 					}

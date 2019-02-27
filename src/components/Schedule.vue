@@ -3,6 +3,7 @@
 		<div class="background" :class="roomStatus"></div>
 		<schedule-far :entries="entries"></schedule-far>
 		<schedule-close :entries="entries" :roomStatus="getRoomStatus()"></schedule-close>
+		<!-- <available-slots-modal></available-slots-modal> -->
 	</div>
 </template>
 
@@ -10,6 +11,7 @@
 	import store from '../store'
 	import ScheduleClose from './ScheduleClose'
 	import ScheduleFar from './ScheduleFar'
+	import AvailableSlotsModal from './AvailableSlotsModal'
 	import {getCurrentEntry, getNextEntry, getNextFreeTime, getProgressUntilNextEntry} from '@/services/calendarService'
 
 	const refreshEveryMilliSeconds = 1000;	// this is way to short but the point is that
@@ -23,7 +25,8 @@
 
 		components: {
 			ScheduleClose,
-			ScheduleFar
+			ScheduleFar,
+			AvailableSlotsModal
 		},
 
 		computed: {
@@ -104,6 +107,12 @@
 			left: 0;
 			height: 100%;
 			width: 100%;
+		}
+		.available-slots-modal{
+			position: absolute;
+			top:92px;
+			left: 49px;
+			z-index:5;
 		}
 		.schedule-close {
 			transition: opacity 600ms;

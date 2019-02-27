@@ -28,8 +28,10 @@
 </template>
 
 <script>
-	const refreshTimeEveryMilliSeconds = 1000
+	import TimerIcon from './TimerIcon.vue'
 	import leftPad from 'left-pad'
+
+	const refreshTimeEveryMilliSeconds = 1000
 
 	export default {
 		props: ['roomName'],
@@ -38,6 +40,9 @@
 				currentTime: null,
 				updateTimeInterval: null
 			}
+		},
+		components: {
+			TimerIcon
 		},
 		async mounted() {
 			this.updateTimeInterval = setInterval(this.refreshTime, refreshTimeEveryMilliSeconds)

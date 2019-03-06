@@ -9,7 +9,7 @@
         <img src="../assets/user-icon-busy.svg" v-if="this.$parent.$parent.getRoomStatus() == 'occupied'" width="100px" height="100px" >
       </div>
       <div class="entry-data-wrapper">
-        <div class="entry-attendee" v-for="(attendee, attendeeIndex) in attendees" v-if="attendee.isOrganizer" v-bind:key="attendeeIndex">{{attendee.name}}</div>
+        <div class="entry-attendee" v-for="(attendee, attendeeIndex) in attendees" v-if="attendee.isOrganizer" v-bind:key="attendeeIndex">{{ organizerName }}</div>
         <div class="entry-time">{{entry.start | hhmm}} — {{entry.end | hhmm}}</div>
       </div>
       <div class ="entry-data-additional-attendees" v-if="this.entry.attendees.length > 1"> + {{this.entry.attendees.length}} more</div>
@@ -24,7 +24,7 @@
 
 <script>
   import {format, distanceInWords, distanceInWordsStrict} from 'date-fns'
-  import {getProgressUntilNextEntry} from '@/services/calendarService'
+  import {getProgressUntilNextEntry,getProgressUntilEntryEnd} from '@/services/calendarService'
 
   export default {
     props: ['entry'],
@@ -47,26 +47,33 @@
       }
     },
     computed: {
-      attendees() {
-        return this.entry.attendees.map(attendee => {
-          const isOrganizer = this.isOrganizer(attendee)
-          return {
-            name: attendee,
-            isOrganizer
-          }
-        }).sort((a,b) => {
-          if(a.isOrganizer && !(b.isOrganizer)) {
-            return -1
-          }
-          if(!(a.isOrganizer) && b.isOrganizer) {
-            return 1
-          }
-          return 0
-        })
-      },
-      totalTime() {
-        return distanceInWordsStrict(this.entry.end, this.entry.start)
-      },
+        attendees() {
+            return this.entry.attendees.map(attendee => {
+                const isOrganizer = this.isOrganizer(attendee)
+                return {
+                    name: attendee,
+                    isOrganizer
+                }
+            }).sort((a,b) => {
+                if(a.isOrganizer && !(b.isOrganizer)) {
+                    return -1
+                }
+                if(!(a.isOrganizer) && b.isOrganizer) {
+                    return 1
+                }
+                return 0
+            })
+        },
+        organizerName() {
+            const organizerName = this.entry.attendees.find(attendeeName => this.isOrganizer(attendeeName))
+            if(organizerName) {
+                return organizerName
+            }
+            return ''
+        },
+        totalTime() {
+            return distanceInWordsStrict(this.entry.end, this.entry.start)
+        },
     },
     methods: {
       isOrganizer(attendeeName) {

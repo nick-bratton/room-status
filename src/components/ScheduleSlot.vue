@@ -1,5 +1,7 @@
 <template>
   <div class="schedule-slot" :class="{free: entry.type === 'free'}">
+
+
     <!-- THESE SLOTS ARE FOR TIME PERIODS THAT HAVE BEEN BOOKED -->
     <div v-if="entry.type !== 'free'" class="slot-content-booked">
       <div class="user-icon">
@@ -9,16 +11,22 @@
         <img src="../assets/user-icon-busy.svg" v-if="this.$parent.$parent.getRoomStatus() == 'occupied'" width="100px" height="100px" >
       </div>
       <div class="entry-data-wrapper">
-        <div class="entry-attendee" v-for="(attendee, attendeeIndex) in attendees" v-if="attendee.isOrganizer" v-bind:key="attendeeIndex">{{ organizerName }}</div>
+        <!-- <div class="entry-attendee" v-for="(attendee, attendeeIndex) in attendees" v-if="attendee.isOrganizer" v-bind:key="attendeeIndex">{{ organizerName }}</div> -->
+        <div class="entry-attendee">{{ this.organizerName }}</div>
         <div class="entry-time">{{entry.start | hhmm}} — {{entry.end | hhmm}}</div>
       </div>
       <div class ="entry-data-additional-attendees" v-if="this.entry.attendees.length > 1"> + {{this.entry.attendees.length}} more</div>
     </div> 
+
+
+
     <!-- THESE SLOTS ARE FOR TIME PERIODS THAT ARE FREE -->
     <div v-else class="slot-content-free">
       <div class="free-icon">FREE</div>
       <div class="free-data">{{entry.start | hhmm}} — {{entry.end | hhmm}}</div>
     </div>
+
+
   </div>
 </template>
 
@@ -68,6 +76,9 @@
             const organizerName = this.entry.attendees.find(attendeeName => this.isOrganizer(attendeeName))
             if(organizerName) {
                 return organizerName
+            } 
+            else if (this.entry.name != ''){
+              return this.entry.name
             }
             return ''
         },

@@ -48,7 +48,7 @@
           }
           //
           // trim the string if it's too long...
-          if (rawRoomName.length >= maxCharsInRoomName){
+          if (rawRoomName.length > maxCharsInRoomName){
             rawRoomName = rawRoomName.slice(0,maxCharsInRoomName);
             rawRoomName += '...';
           }

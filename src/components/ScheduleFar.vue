@@ -183,17 +183,9 @@
         this.roomName = roomName
       },
       currentOrganizer() {
-        // console.log(this.currentEntry)
         if (this.currentEntry){
-          // console.log('here')
           for (let attendee of this.currentEntry.attendees){
-            // console.log(attendee)
-            console.log(attendee)
-            console.log(this.currentEntry.organizer)
-            // console.log( this.currentEntry.organizer.emailAddress)
-            console.log(this.currentEntry.organizer.emailAddress.name, this.currentEntry.organizer.emailAddress.name === attendee)
             if (this.currentEntry.organizer && this.currentEntry.organizer.emailAddress && this.currentEntry.organizer.emailAddress.name === attendee){
-              // console.log(this.currentEntry.organizer,this.currentEntry.organizer.emailAddress,this.currentEntry.organizer.emailAddress.name )
               return attendee
             }
           }

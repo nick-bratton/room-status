@@ -4,7 +4,7 @@
       <div class="room-name" v-if="roomName">
         {{ roomName | niceRoomName }}
       </div>
-      <img id="burger" src="../assets/burger-menu-icon.svg" width="37" height="31"> 
+      <!-- <img id="burger" src="../assets/burger-menu-icon.svg" width="37" height="31">  -->
     </div>
     <div class="current-time" v-if="currentTime">
       {{ currentTime | niceTime }}
@@ -37,7 +37,7 @@
     },
     filters: {
       niceRoomName(rawRoomName) {
-        let maxCharsInRoomName = 5;
+        let maxCharsInRoomName = 6;
         if (!rawRoomName) return rawRoomName
         else 
           rawRoomName = rawRoomName.replace(/^room(-|–)(ber|muc)(-|–)/i, "")

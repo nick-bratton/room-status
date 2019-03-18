@@ -65,7 +65,6 @@
                 }))
                     .sort((first, second) => first.start - second.start)
                 this.calendarEntries = entries;
-                console.log(entries);
             },
             async refreshRoomName() {
                 const roomName = await getRoomName(this.$route.params.user)

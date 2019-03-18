@@ -166,6 +166,14 @@
     margin-left: auto;
   }
 
+	.entry-data-additional-attendees{
+		font-size:32px;
+		font-weight:bold;
+		color: rgb(134,141,146);
+		margin-top: 16px;
+		margin-left: auto;
+	}
+
 </style>
 
 

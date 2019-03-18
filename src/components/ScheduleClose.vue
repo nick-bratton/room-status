@@ -250,4 +250,13 @@
       transition: opacity .3s;
     }
 
+    .transparent{
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .opaque{
+      opacity: 1;
+      transition: opacity .3s;
+    }
+
 </style>

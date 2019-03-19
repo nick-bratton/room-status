@@ -1,0 +1,6 @@
+{
+  "short_name": "IXDS Room Display",
+  "name": "IXDS Meeting Room Display",
+  "display": "fullscreen",
+  "orientation": "portrait"
+}

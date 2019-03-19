@@ -13,7 +13,7 @@
   import {getCurrentEntry, getProgressUntilEntryEnd, getProgressUntilNextEntry, getNextEntry, getNextFreeTime} from '@/services/calendarService'
   import TimerIcon from './TimerIcon'
 
-  const refreshEveryMilliSeconds = 60000
+  const refreshEveryMilliSeconds = 30000
 
   export default {
     data() { 

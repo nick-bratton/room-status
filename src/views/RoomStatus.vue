@@ -13,7 +13,7 @@
 
     import {parse as parseDate} from 'date-fns'
 
-    const refreshEveryMilliSeconds = 60000;
+    const refreshEveryMilliSeconds = 30000;
 
     export default {
         name: 'calendar',

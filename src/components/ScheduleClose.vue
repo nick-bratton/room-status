@@ -25,7 +25,7 @@
     const officeCloseTime = {hours: 18, minutes: 0}
     const officeOpenTime = {hours: 10, minutes: 0}
 
-    const refreshEveryMilliSeconds = 60000
+    const refreshEveryMilliSeconds = 5000
     const fadeOutThresholdTop = 110
     const fadeOutThresholdBottom = 985
 

@@ -135,11 +135,13 @@
       async mounted() {
         if (this.$route.params.user) {await this.refreshRoomName()}
         this.updateInterval = setInterval(this.refreshCalendar, refreshEveryMilliSeconds)
-        if (this.$refs.wrapper.getBoundingClientRect().height > 840){
-          this.contentOverflowsViewport = true;
+        if (this.$refs.wrapper){
+          if (this.$refs.wrapper.getBoundingClientRect().height > 840){
+            this.contentOverflowsViewport = true;
+          }
+          this.handleSlotOpacities();
+          this.handleSwipeDownArrowOpacity();
         }
-        this.handleSlotOpacities();
-        this.handleSwipeDownArrowOpacity();
       },
       beforeDestroy() {
         clearInterval(this.updateInterval)

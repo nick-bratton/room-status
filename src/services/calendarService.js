@@ -18,34 +18,49 @@ export async function getCalendarEntries(
 }
 
 export function getCurrentEntry(entries) {
-    const now = new Date()
-    return entries.find((entry) => {
-        return entry.start <= now && now <= entry.end
-    })
+    if (entries != null){
+        const now = new Date()
+        return entries.find((entry) => {
+            return entry.start <= now && now <= entry.end
+        })
+    }
+    else {
+        return null
+    }
 }
 
 // Array.find returns the first element that satisfies the passed in function,
 // so this will return the first session that starts later than now and ignore all subsequent ones.
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
 export function getNextEntry(entries) {
-    const now = new Date()
-    return entries.find((entry) => {
-        return now < entry.start
-    })
+    if (entries != null){
+        const now = new Date()
+        return entries.find((entry) => {
+            return now < entry.start
+        })
+    }
+    else{
+        return null
+    }
 }
 
 // Returns the next available time between calendar entries.
 export function getNextFreeTime(entries) {
     // For now there is no minimum amount of time for the room to be considered available.
-    const minimumTimeInBetweenInMilliseconds = 0
-    const now = new Date()
-    for (let i = 0; i < entries.length; i++) {
-        const notEnded = now <= entries[i].end
-        const isLastEntry = i === entries.length - 1
-        const enoughSpaceInBetween = isLastEntry || new Date(entries[i].end.getMilliseconds() + minimumTimeInBetweenInMilliseconds) < entries[i + 1].start
-        if (notEnded && enoughSpaceInBetween) {
-            return entries[i].end
+    if (entries != null){
+        const minimumTimeInBetweenInMilliseconds = 0
+        const now = new Date()
+        for (let i = 0; i < entries.length; i++) {
+            const notEnded = now <= entries[i].end
+            const isLastEntry = i === entries.length - 1
+            const enoughSpaceInBetween = isLastEntry || new Date(entries[i].end.getMilliseconds() + minimumTimeInBetweenInMilliseconds) < entries[i + 1].start
+            if (notEnded && enoughSpaceInBetween) {
+                return entries[i].end
+            }
         }
+    }
+    else {
+        return now
     }
 }
 

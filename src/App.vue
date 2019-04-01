@@ -21,19 +21,19 @@ export default {}
 
   @font-face {
     font-family: 'Klavika';
-    src: url('./assets/Klavika-Light.otf');
+    src: url('./assets/fonts/Klavika-Light.otf');
     font-weight: normal;
   }
 
   @font-face {
     font-family: 'Klavika';
-    src: url('./assets/Klavika-Medium.otf');
+    src: url('./assets/fonts/Klavika-Medium.otf');
     font-weight: bold;
   }
 
   @font-face {
     font-family: 'Klavika';
-    src: url('./assets/Klavika-Bold.otf');
+    src: url('./assets/fonts/Klavika-Bold.otf');
     font-weight: bolder;
   }
 

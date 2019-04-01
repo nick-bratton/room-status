@@ -23,3 +23,6 @@ yarn-error.log*
 
 # Design documents
 /docs/
+
+# Fonts
+/src/assets/fonts/

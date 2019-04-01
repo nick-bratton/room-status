@@ -14,7 +14,8 @@
   import AvailableSlotsModal from './AvailableSlotsModal'
   import {getCurrentEntry, getNextEntry, getNextFreeTime, getProgressUntilNextEntry} from '@/services/calendarService'
 
-  const refreshEveryMilliSeconds = 30000;	
+  const refreshEveryMilliSeconds = 5000;
+
   export default {
     name: 'Schedule',
     props: {

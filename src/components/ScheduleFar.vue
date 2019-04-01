@@ -35,7 +35,7 @@
   import TopBar from './TopBar.vue'
   import RoomDetailsPanel from './RoomDetailsPanel.vue'
 
-  const refreshEveryMilliSeconds = 30000
+  const refreshEveryMilliSeconds = 5000
 
   export default {
     props: {

@@ -16,7 +16,7 @@
   import TimerIcon from './TimerIcon.vue'
   import leftPad from 'left-pad'
 
-  const refreshTimeEveryMilliSeconds = null
+  const refreshTimeEveryMilliSeconds = 1000
 
   export default {
     props: ['roomName'],

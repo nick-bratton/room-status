@@ -1,8 +1,9 @@
 # room-status
 
-Shows the availability status of an office room. Features a close-up view and a far-away view, which are toggled with a proximity sensor.
+Room status is a bring-your-own-device Room Occupancy app. As such it displays if a room is currently in use or free to occupy.
+A detailed overview of future events can be triggered via touch or externally (for example a proximity sensor or button).
 
-This project uses Microsoft Active Directory for the room information and pubnub for subscribing to the proximity information.
+This project uses Microsoft Active Directory/Outlook for the room information and pubnub for subscribing to the proximity information.
 
 ## Configuration
 
@@ -25,16 +26,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

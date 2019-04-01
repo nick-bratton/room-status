@@ -1,4 +1,4 @@
-import api from "./apiService"
+import api from "./microsoftGraphService"
 
 const fakeRooms = [
     {
